@@ -1,6 +1,3 @@
-// ACEST FIȘIER CONȚINE DATELE MENIULUI
-// Este generat automat din Admin Panel sau editat manual.
-
 const menuData = {
   "S1": {
     "ro": {
@@ -98,4 +95,5 @@ const menuData = {
       ]
     }
   }
+};
 };
