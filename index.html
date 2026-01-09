@@ -3,105 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questfield - Meniu Săptămânal</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Meniu Questfield</title>
+    <style>
+        /* STILURI DE BAZĂ */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* HEADER & CONTROL */
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        
+        .controls { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); flex-wrap: wrap; gap: 10px; }
+        
+        .lang-switch button { padding: 8px 16px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-weight: bold; }
+        .lang-switch button.active { background: #2c3e50; color: white; border-color: #2c3e50; }
+        
+        .week-nav { display: flex; align-items: center; gap: 15px; }
+        .nav-btn { background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; transition: background 0.2s; }
+        .nav-btn:hover { background: #2980b9; }
+        
+        #weekDates { font-size: 1.1em; font-weight: bold; color: #555; }
+        .badge { background: #27ae60; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8em; }
+
+        /* TABEL */
+        .table-container { overflow-x: auto; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        thead th { background-color: #2c3e50; color: white; position: sticky; top: 0; }
+        tbody tr:hover { background-color: #f9f9f9; }
+        
+        /* Prima coloană (Categoria) */
+        tbody th { background-color: #ecf0f1; color: #2c3e50; font-weight: bold; min-width: 150px; text-transform: uppercase; font-size: 0.9em; }
+
+        /* MESAJE STARE */
+        #loading, #error { text-align: center; padding: 40px; display: none; }
+        #error { color: #e74c3c; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .controls { flex-direction: column; text-align: center; }
+            .week-nav { justify-content: center; width: 100%; }
+            /* Pe mobil tabelul va avea scroll orizontal */
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container header-content">
-            <div class="logo-area">
-                 </div>
 
-            <div class="header-text">
-                <h1>Questfield International College</h1>
-                <p class="subtitle" data-i18n="subtitle">Meniu Săptămânal</p>
-            </div>
-
-            <div class="lang-switcher">
-                <button id="btn-ro" class="lang-btn active" onclick="changeLanguage('ro')">RO</button>
-                <span class="divider">|</span>
-                <button id="btn-en" class="lang-btn" onclick="changeLanguage('en')">EN</button>
-            </div>
+<div class="container">
+    <header>
+        <h1 data-i18n="title">Meniu Săptămânal</h1>
+        <div class="lang-switch">
+            <button id="btn-ro" class="lang-btn active" onclick="changeLanguage('ro')">RO</button>
+            <button id="btn-en" class="lang-btn" onclick="changeLanguage('en')">EN</button>
         </div>
     </header>
 
-    <nav class="navigation">
-        <div class="container nav-container">
-            <button id="prevWeek" class="nav-button" aria-label="Previous Week">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-                <span class="nav-text" data-i18n="prevWeek">Săpt. Anterioară</span>
-            </button>
+    <div class="controls">
+        <button id="prevWeek" class="nav-btn">
+            &larr; <span class="nav-text" data-i18n="prevWeek">Săpt. Anterioară</span>
+        </button>
 
-            <div class="week-info">
-                <div id="weekDates" class="week-dates"></div>
-                <div id="currentWeekBadge" class="current-week-badge" style="display: none;" data-i18n="currentWeekBadge">Săptămâna Curentă</div>
-                <button id="goToCurrentWeek" class="go-to-current" style="display: none;" data-i18n="backToCurrent">Înapoi la Săptămâna Curentă</button>
-            </div>
-
-            <button id="nextWeek" class="nav-button" aria-label="Next Week">
-                <span class="nav-text" data-i18n="nextWeek">Săpt. Următoare</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+        <div style="text-align:center">
+            <div id="weekDates">...</div>
+            <div id="currentWeekBadge" class="badge" style="display:none;" data-i18n="currentBadge">Săptămâna Curentă</div>
+            <button id="goToCurrentWeek" style="display:none; margin-top:5px; font-size:0.8em; cursor:pointer; background:none; border:none; text-decoration:underline; color:#3498db;" data-i18n="backToCurrent">
+                Înapoi la Săptămâna Curentă
             </button>
         </div>
-    </nav>
 
-    <main class="main-content">
-        <div class="container">
-            <div id="loading" class="loading">
-                <div class="spinner"></div>
-                <p data-i18n="loading">Se încarcă meniul...</p>
-            </div>
+        <button id="nextWeek" class="nav-btn">
+            <span class="nav-text" data-i18n="nextWeek">Săpt. Următoare</span> &rarr;
+        </button>
+    </div>
 
-            <div id="error" class="error" style="display: none;">
-                <p data-i18n="error">Nu s-au putut încărca datele meniului.</p>
-            </div>
+    <div id="loading">
+        <p data-i18n="loading">Se încarcă datele...</p>
+    </div>
 
-            <div id="menuTable" class="menu-wrapper" style="display: none;">
-                <div class="table-responsive">
-                    <table class="menu-table">
-                        <thead>
-                            <tr>
-                                <th class="category-header" data-i18n="category">Categorie</th>
-                                <th data-i18n="mon">Luni</th>
-                                <th data-i18n="tue">Marți</th>
-                                <th data-i18n="wed">Miercuri</th>
-                                <th data-i18n="thu">Joi</th>
-                                <th data-i18n="fri">Vineri</th>
-                            </tr>
-                        </thead>
-                        <tbody id="menuTableBody">
-                            </tbody>
-                    </table>
-                </div>
-                <div class="menu-legend">
-                    <small data-i18n="disclaimer">* Ingredientele pot varia.</small>
-                </div>
-            </div>
-        </div>
-    </main>
+    <div id="error">
+        <p>Eroare încărcare.</p>
+    </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p data-i18n="footerNote">Meniul poate suferi modificări.</p>
-                <p class="footer-contact">
-                    <span data-i18n="contact">Contact:</span> 
-                    <a href="mailto:office@questfield.ro">office@questfield.ro</a>
-                </p>
-            </div>
-            <div class="footer-copyright">
-                <p>© 2026 Questfield International College.</p>
-            </div>
-        </div>
-    </footer>
+    <div id="menuTable" class="table-container" style="display:none;">
+        <table class="menu-table">
+            <thead>
+                <tr>
+                    <th>Categorie</th>
+                    <th>Luni</th>
+                    <th>Marți</th>
+                    <th>Miercuri</th>
+                    <th>Joi</th>
+                    <th>Vineri</th>
+                </tr>
+            </thead>
+            <tbody id="menuTableBody">
+                </tbody>
+        </table>
+    </div>
+</div>
 
-    <script src="script.js"></script> 
+<script src="script.js"></script>
 </body>
 </html>
+
 
 
