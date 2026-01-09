@@ -7,10 +7,11 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <style>
-        /* --- DESIGN QUESTFIELD --- */
+        /* --- STILURI VIZUALE --- */
         :root {
             --q-blue: #0E2636;
             --q-gold: #CE9F49;
@@ -51,7 +52,7 @@
             margin: 15px auto 0; border-radius: 2px;
         }
 
-        /* NAVIGATION */
+        /* NAVIGATION - BUTOANE DATE */
         .week-nav {
             display: flex; justify-content: center; gap: 15px;
             margin-bottom: 30px; flex-wrap: wrap;
@@ -59,10 +60,10 @@
         .week-btn {
             background-color: var(--q-white);
             border: 1px solid var(--border);
-            color: var(--q-text); padding: 14px 25px;
+            color: var(--q-text); padding: 14px 20px;
             font-family: 'Montserrat', sans-serif; font-weight: 600;
-            font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease;
-            min-width: 160px; text-align: center; border-radius: 4px;
+            font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease;
+            min-width: 180px; text-align: center; border-radius: 4px;
         }
         .week-btn:hover { border-color: var(--q-gold); transform: translateY(-2px); }
         .week-btn.active {
@@ -70,7 +71,7 @@
             border-color: var(--q-blue); box-shadow: 0 5px 15px rgba(14, 38, 54, 0.2);
         }
 
-        /* LANGUAGE */
+        /* LIMBA */
         .lang-wrapper { display: flex; justify-content: flex-end; margin-bottom: 10px; }
         .lang-btn {
             background: transparent; border: 1px solid #ccc;
@@ -78,7 +79,7 @@
             color: #666; cursor: pointer; border-radius: 4px;
         }
 
-        /* TABLE */
+        /* TABEL MENIU */
         .table-wrap {
             overflow-x: auto; border-top: 3px solid var(--q-blue);
             border-radius: 4px 4px 0 0; min-height: 300px; position: relative;
@@ -115,36 +116,37 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* FOOTER & ADMIN */
-        footer { margin-top: auto; padding: 30px; text-align: center; font-size: 0.8rem; color: #AAA; position: relative; }
-        .admin-lock {
-            cursor: pointer; opacity: 0.3; transition: 0.3s; margin-bottom: 5px; font-size: 1.1rem;
+        /* FOOTER & ADMIN ICON */
+        footer { margin-top: auto; padding: 30px; text-align: center; font-size: 0.8rem; color: #AAA; }
+        .admin-trigger {
+            cursor: pointer; opacity: 0.4; transition: 0.3s; 
+            font-size: 1.2rem; color: #333; margin-bottom: 10px; display: inline-block;
         }
-        .admin-lock:hover { opacity: 1; color: var(--q-gold); }
+        .admin-trigger:hover { opacity: 1; color: var(--q-blue); }
 
-        /* ADMIN MODAL */
+        /* MODAL ADMIN (POPUP) */
         .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(14, 38, 54, 0.95); backdrop-filter: blur(5px);
         }
         .modal-content {
-            background-color: white; margin: 5% auto; padding: 40px;
+            background-color: white; margin: 5% auto; padding: 30px;
             width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 25px 60px rgba(0,0,0,0.5);
             text-align: left;
         }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .modal-header h2 { margin: 0; color: var(--q-blue); }
+        .modal-header h2 { margin: 0; color: var(--q-blue); font-size: 1.5rem; }
         .close-modal { font-size: 28px; cursor: pointer; color: #ccc; }
         .close-modal:hover { color: var(--q-blue); }
 
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 5px; color: #555; }
-        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         
         .btn-save {
             background-color: var(--q-blue); color: white; border: none; width: 100%;
             padding: 15px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1rem;
-            margin-top: 10px; text-transform: uppercase;
+            margin-top: 20px; text-transform: uppercase;
         }
         .btn-save:hover { background-color: var(--q-gold); color: var(--q-blue); }
         .info-text { font-size: 0.85rem; color: #777; background: #f0f0f0; padding: 10px; border-radius: 4px; margin-bottom: 20px; }
@@ -158,10 +160,10 @@
         </header>
 
         <div class="week-nav">
-            <button onclick="changeWeek(0)" id="btnW0" class="week-btn">Săptămâna 1</button>
-            <button onclick="changeWeek(1)" id="btnW1" class="week-btn">Săptămâna 2</button>
-            <button onclick="changeWeek(2)" id="btnW2" class="week-btn">Săptămâna 3</button>
-            <button onclick="changeWeek(3)" id="btnW3" class="week-btn">Săptămâna 4</button>
+            <button onclick="changeWeek(0)" id="btnW0" class="week-btn">...</button>
+            <button onclick="changeWeek(1)" id="btnW1" class="week-btn">...</button>
+            <button onclick="changeWeek(2)" id="btnW2" class="week-btn">...</button>
+            <button onclick="changeWeek(3)" id="btnW3" class="week-btn">...</button>
         </div>
 
         <div class="lang-wrapper">
@@ -171,7 +173,7 @@
         <div class="table-wrap">
             <div id="loader" class="loader">
                 <div class="spinner"></div>
-                <span>Se actualizează din Google Sheets...</span>
+                <span>Se preiau datele din Google Sheets...</span>
             </div>
             <table id="menuTable">
                 <thead><tr id="tableHeader"></tr></thead>
@@ -181,55 +183,57 @@
     </div>
 
     <footer>
-        <i class="fas fa-lock admin-lock" onclick="openAdmin()" title="Administrare Link-uri"></i>
+        <i class="fas fa-lock admin-trigger" onclick="openAdmin()" title="Admin Panel"></i>
         <div>&copy; 2026 Questfield</div>
     </footer>
 
     <div id="adminModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Configurare Link-uri</h2>
+                <h2>Configurare Link-uri Google Sheets</h2>
                 <span class="close-modal" onclick="closeAdmin()">&times;</span>
             </div>
             
             <div class="info-text">
-                <i class="fas fa-info-circle"></i> Aici poți schimba sursa datelor. Lipește noile link-uri CSV de la Google Sheets. 
-                Apăsând butonul de jos, se va descărca o <b>versiune nouă</b> a site-ului pe care trebuie să o urci pe server.
+                <i class="fas fa-info-circle"></i> Instrucțiuni:<br>
+                1. Lipește link-urile CSV (File -> Share -> Publish to Web -> CSV) pentru fiecare săptămână.<br>
+                2. Apasă butonul de jos.<br>
+                3. Se va descărca un fișier <b>index.html</b> nou. Urcă-l pe site în locul celui vechi.
             </div>
 
             <div class="form-group">
-                <label>Link CSV Săptămâna 1:</label>
-                <input type="text" id="inLink0">
+                <label id="lblW0">Link Săptămâna Curentă:</label>
+                <input type="text" id="inLink0" placeholder="https://docs.google.com/...">
             </div>
             <div class="form-group">
-                <label>Link CSV Săptămâna 2:</label>
+                <label id="lblW1">Link Săptămâna Viitoare:</label>
                 <input type="text" id="inLink1">
             </div>
             <div class="form-group">
-                <label>Link CSV Săptămâna 3:</label>
+                <label id="lblW2">Link Săptămâna 3:</label>
                 <input type="text" id="inLink2">
             </div>
             <div class="form-group">
-                <label>Link CSV Săptămâna 4:</label>
+                <label id="lblW3">Link Săptămâna 4:</label>
                 <input type="text" id="inLink3">
             </div>
 
             <button onclick="saveAndDownload()" class="btn-save">
-                <i class="fas fa-download"></i> Salvează și Descarcă index.html
+                <i class="fas fa-download"></i> Salvează și Descarcă Site
             </button>
         </div>
     </div>
 
     <script>
         // =========================================================================
-        // CONFIGURARE STOCATA - ACEASTA ZONA SE MODIFICA AUTOMAT DIN ADMIN
+        // ZONA DE CONFIGURARE (AICI SE SALVEAZĂ LINKURILE AUTOMAT)
         // =========================================================================
         /* START_CONFIG */
         var storedLinks = [
-            "https://docs.google.com/spreadsheets/d/e/ExampleID1/pub?gid=0&single=true&output=csv",
-            "https://docs.google.com/spreadsheets/d/e/ExampleID2/pub?gid=0&single=true&output=csv",
-            "https://docs.google.com/spreadsheets/d/e/ExampleID3/pub?gid=0&single=true&output=csv",
-            "https://docs.google.com/spreadsheets/d/e/ExampleID4/pub?gid=0&single=true&output=csv"
+            "",
+            "",
+            "",
+            ""
         ];
         /* END_CONFIG */
         // =========================================================================
@@ -237,14 +241,14 @@
         let currentLang = 'ro';
         let currentWeekIndex = 0;
         let cachedData = {};
-
-        // --- 1. LOGICA DE AFISARE (CALENDAR, TABEL, FETCH) ---
         
+        // --- 1. LOGICA DE DATE (CALENDAR) ---
         function getMonday(d) {
             d = new Date(d);
             var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
             return new Date(d.setDate(diff));
         }
+
         function formatDate(d) {
             let dd = d.getDate().toString().padStart(2,'0');
             let mm = (d.getMonth()+1).toString().padStart(2,'0');
@@ -254,11 +258,25 @@
         function initButtons() {
             let today = new Date();
             let start = getMonday(today);
+
             for(let i=0; i<4; i++) {
-                let s = new Date(start); s.setDate(start.getDate() + i*7);
-                let e = new Date(s); e.setDate(s.getDate() + 4);
+                // Calculam Lunea pentru saptamana i
+                let s = new Date(start); 
+                s.setDate(start.getDate() + i*7);
+                
+                // Calculam Vinerea (Luni + 4 zile)
+                let e = new Date(s); 
+                e.setDate(s.getDate() + 4);
+
                 let btn = document.getElementById(`btnW${i}`);
-                if(btn) btn.textContent = `S${i+1}: ${formatDate(s)} - ${formatDate(e)}`;
+                if(btn) {
+                    // TEXTUL BUTONULUI: DOAR DATELE
+                    btn.textContent = `${formatDate(s)} - ${formatDate(e)}`;
+                }
+
+                // Update si label-urile din Admin ca sa stii ce editezi
+                let lbl = document.getElementById(`lblW${i}`);
+                if(lbl) lbl.textContent = `Link pentru intervalul: ${formatDate(s)} - ${formatDate(e)}`;
             }
             updateActiveButton();
         }
@@ -276,17 +294,17 @@
             loadMenuData(index);
         }
 
+        // --- 2. LOGICA FETCH GOOGLE SHEETS ---
         function loadMenuData(index) {
             const url = storedLinks[index];
             const tableBody = document.getElementById('tableBody');
             const loader = document.getElementById('loader');
 
-            // Verificare link gol sau default
-            if(!url || url.includes("ExampleID")) {
+            if(!url || url.length < 10) {
                 tableBody.innerHTML = `<tr><td colspan="6" style="padding:30px; text-align:center;">
-                    <i class="fas fa-exclamation-circle" style="font-size:24px; color:#orange; margin-bottom:10px;"></i><br>
-                    Meniul nu este configurat pentru Săptămâna ${index+1}.<br>
-                    Folosește lăcățelul din subsol pentru a adăuga link-ul.
+                    <i class="fas fa-link" style="font-size:24px; color:#orange; margin-bottom:10px;"></i><br>
+                    Lipsă link CSV.<br>
+                    Apasă pe lăcățelul din subsol pentru configurare.
                 </td></tr>`;
                 return;
             }
@@ -297,7 +315,7 @@
             }
 
             loader.style.display = 'flex';
-            // Cache busting
+            // Adaugam timestamp ca sa nu ia din cache
             const bustCacheUrl = url + "&t=" + new Date().getTime();
 
             Papa.parse(bustCacheUrl, {
@@ -309,16 +327,17 @@
                         cachedData[index] = parsed;
                         renderTable(parsed);
                     } else {
-                        tableBody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:red;">Eroare structură date (Verifică dacă există 'Luni'/'Monday' în Excel).</td></tr>`;
+                        tableBody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:red;">Eroare citire date (Google Sheet invalid).</td></tr>`;
                     }
                 },
                 error: function() {
                     loader.style.display = 'none';
-                    tableBody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:red;">Eroare conexiune Google Sheets.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:red;">Eroare conexiune. Verifică link-ul.</td></tr>`;
                 }
             });
         }
 
+        // --- 3. PARSARE TABEL (Caută Luni/Monday) ---
         function parseSheetData(rows) {
             let roIdx = -1, enIdx = -1;
             for(let i=0; i<rows.length; i++) {
@@ -333,18 +352,22 @@
         function extractBlock(rows, startRowIndex) {
             let header = rows[startRowIndex];
             let startCol = 0;
+            // Identificam coloana de start
             for(let k=0; k<header.length; k++) {
                 if(header[k] && (header[k].toLowerCase().includes('luni') || header[k].toLowerCase().includes('monday'))) {
                     startCol = k; break;
                 }
             }
+            
             let days = header.slice(startCol, startCol+5);
             let dataRows = [];
+            
+            // Luam urmatoarele 6 randuri
             let i = startRowIndex + 1;
             let count = 0;
             while(i < rows.length && count < 6) {
                 let r = rows[i];
-                let typeCol = startCol > 0 ? startCol - 1 : 0;
+                let typeCol = startCol > 0 ? startCol - 1 : 0; // Tipul (Fel 1) e de obicei la stanga
                 if(r && r[typeCol]) {
                     dataRows.push({ type: r[typeCol], items: r.slice(startCol, startCol+5) });
                     count++;
@@ -368,7 +391,11 @@
             currentData.rows.forEach(r => {
                 let tr = document.createElement('tr');
                 if(r.type.toLowerCase().includes('salat') || r.type.toLowerCase().includes('salad')) tr.classList.add('row-salad');
-                let tdName = document.createElement('td'); tdName.innerHTML = r.type; tr.appendChild(tdName);
+                
+                let tdName = document.createElement('td'); 
+                tdName.innerHTML = r.type; 
+                tr.appendChild(tdName);
+                
                 r.items.forEach(it => {
                     let cell = document.createElement('td'); cell.textContent = it || '-'; tr.appendChild(cell);
                 });
@@ -382,13 +409,11 @@
             if(cachedData[currentWeekIndex]) renderTable(cachedData[currentWeekIndex]);
         }
 
-        // --- 2. ADMIN PANEL & SELF-UPDATE LOGIC ---
-
+        // --- 4. ADMIN & SELF-UPDATE ---
         function openAdmin() {
             let p = prompt("Parola Administrator:");
             if(p === "questfield") {
                 document.getElementById('adminModal').style.display = 'block';
-                // Pre-fill inputs with current links
                 document.getElementById('inLink0').value = storedLinks[0];
                 document.getElementById('inLink1').value = storedLinks[1];
                 document.getElementById('inLink2').value = storedLinks[2];
@@ -402,7 +427,6 @@
         }
 
         function saveAndDownload() {
-            // 1. Get new values
             let newLinks = [
                 document.getElementById('inLink0').value.trim(),
                 document.getElementById('inLink1').value.trim(),
@@ -410,14 +434,10 @@
                 document.getElementById('inLink3').value.trim()
             ];
 
-            // 2. Get current HTML source
             let htmlContent = document.documentElement.outerHTML;
-
-            // 3. Create the new JSON string for the variable
-            // We use pretty print (null, 4) to keep it readable
             let newArrayString = JSON.stringify(newLinks, null, 4);
-
-            // 4. Replace the old variable in the code using Regex looking for the markers
+            
+            // Inlocuim blocul de config existent cu cel nou
             let regex = /\/\* START_CONFIG \*\/[\s\S]*?\/\* END_CONFIG \*\//;
             let newBlock = `/* START_CONFIG */
         var storedLinks = ${newArrayString};
@@ -425,7 +445,6 @@
             
             let newHtml = htmlContent.replace(regex, newBlock);
 
-            // 5. Download the file
             let blob = new Blob([newHtml], {type: "text/html"});
             let link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -434,14 +453,14 @@
             link.click();
             document.body.removeChild(link);
 
-            alert("Fișierul index.html actualizat a fost descărcat!\nTe rog să îl încarci pe site.");
+            alert("Noul fișier index.html a fost descărcat. Te rog să îl urci pe site!");
             closeAdmin();
         }
 
-        // --- INIT ---
+        // --- PORNIRE ---
         window.onload = function() {
             initButtons();
-            changeWeek(0); 
+            changeWeek(0);
         };
 
     </script>
