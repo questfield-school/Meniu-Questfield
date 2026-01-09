@@ -1,6 +1,6 @@
 /* --- SETĂRI GENERALE --- */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font similar cu Excel */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
     background-color: #f0f0f0;
@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-    max-width: 1400px; /* Destul de lat pentru a cuprinde tot tabelul */
+    max-width: 1400px;
     margin: 0 auto;
     background: white;
     padding: 20px;
@@ -31,7 +31,7 @@ header {
 h1 {
     margin: 0;
     font-size: 24px;
-    color: #4472c4; /* Albastrul din Excel */
+    color: #4472c4; /* Albastru Excel */
 }
 
 .controls {
@@ -39,7 +39,6 @@ h1 {
     gap: 10px;
 }
 
-/* Stilizare selector și buton */
 select, button {
     padding: 10px 15px;
     font-size: 16px;
@@ -66,20 +65,19 @@ button:hover {
     background-color: #365a9e;
 }
 
-/* --- TABELUL MENIU (Replicare Design Excel) --- */
+/* --- TABEL --- */
 .table-responsive {
-    overflow-x: auto; /* Permite scroll orizontal pe mobil */
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
-    border-collapse: collapse; /* Liniile lipite ca în Excel */
-    min-width: 800px; /* Asigură că nu se înghesuie prea tare */
+    border-collapse: collapse;
+    min-width: 800px;
 }
 
-/* Borduri generale */
 th, td {
-    border: 1px solid #000; /* Bordura neagră specifică Excel */
+    border: 1px solid #000; /* Bordură neagră ca în Excel */
     padding: 12px;
     text-align: center;
     vertical-align: middle;
@@ -87,65 +85,47 @@ th, td {
     line-height: 1.4;
 }
 
-/* --- ZONA DE HEADER (Zilele Săptămânii) --- */
+/* Header Zile (Galben) */
 thead th {
-    background-color: #ffe699; /* Galbenul din Excel */
+    background-color: #ffe699;
     color: black;
     font-weight: bold;
     font-size: 18px;
     text-transform: capitalize;
 }
 
-/* Prima celulă din Header (colțul stânga sus) */
+/* Prima celulă header (Colțul) */
 thead th:first-child {
-    background-color: #4472c4; /* Albastru pentru colț, dacă preferi */
+    background-color: #4472c4;
     color: white;
-    width: 150px; /* Lățime fixă pentru coloana de categorii */
+    width: 150px;
 }
 
-/* --- PRIMA COLOANĂ (Categorii: Felul 1, Vegetarian etc.) --- */
+/* Prima coloană (Categorii - Albastru) */
 td.course-type {
-    background-color: #4472c4; /* Albastrul închis din stânga */
+    background-color: #4472c4;
     color: white;
     font-weight: bold;
     font-size: 16px;
     text-transform: capitalize;
 }
 
-/* --- CONȚINUTUL TABELULUI --- */
 tbody td {
     background-color: #ffffff;
     color: black;
     font-weight: 500;
 }
 
-/* --- RÂNDUL DE SALATĂ (Specific Excel) --- */
-/* Identificăm rândul de Salată (al 5-lea rând în datele noastre) și îl facem verde deschis */
+/* Rândul Salată (Verde deschis) - al 5-lea rând */
 tbody tr:nth-child(5) td:not(.course-type) {
-    background-color: #e2efda; /* Verdele deschis din poze */
+    background-color: #e2efda;
 }
 
-/* --- RESPONSIVE (Mobil) --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 20px;
-    }
-    
-    th, td {
-        padding: 8px;
-        font-size: 13px;
-    }
-    
-    .controls {
-        width: 100%;
-    }
-    
-    select, button {
-        flex: 1;
-    }
+    h1 { font-size: 20px; }
+    th, td { padding: 8px; font-size: 13px; }
+    .controls { width: 100%; }
+    select, button { flex: 1; }
 }
-  }
-}
-
-
 
