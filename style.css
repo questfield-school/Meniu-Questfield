@@ -1,206 +1,151 @@
-/* Importăm fontul Montserrat pentru un aspect modern și profesional */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
-
-:root {
-  /* Paleta de culori oficială Questfield */
-  --q-dark-blue: #0E2636;  /* Firefly - Albastrul închis principal */
-  --q-gold: #CE9F49;       /* Roti - Auriul de accent */
-  --q-white: #FFFFFF;
-  --q-bg-light: #FAFAFA;   /* Alabaster - Fundal ușor gri */
-  --q-text-grey: #333333;
-  --q-border: #E0E0E0;
-}
-
-/* Resetare de bază */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* --- SETĂRI GENERALE --- */
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--q-bg-light);
-  color: var(--q-text-grey);
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  align-items: center;
-  padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font similar cu Excel */
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+    color: #333;
 }
 
-/* Stiluri pentru Header și Titluri */
+.container {
+    max-width: 1400px; /* Destul de lat pentru a cuprinde tot tabelul */
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* --- HEADER ȘI BUTOANE --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
 h1 {
-  color: var(--q-dark-blue);
-  font-weight: 700;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+    margin: 0;
+    font-size: 24px;
+    color: #4472c4; /* Albastrul din Excel */
 }
 
-h2 {
-  color: var(--q-gold);
-  font-weight: 600;
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  position: relative;
-  display: inline-block;
+.controls {
+    display: flex;
+    gap: 10px;
 }
 
-/* Linie decorativă sub subtitlu */
-h2::after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 3px;
-  background-color: var(--q-dark-blue);
-  margin: 8px auto 0;
-  border-radius: 2px;
+/* Stilizare selector și buton */
+select, button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: all 0.3s ease;
 }
 
-/* Container pentru controale (Butoane) */
-.controls, div[style*="text-align: center"] {
-  margin-bottom: 25px;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
+button:hover, select:hover {
+    border-color: #4472c4;
+    background-color: #f9f9f9;
 }
 
-/* Stiluri Butoane - PROFI */
 button {
-  background-color: var(--q-dark-blue);
-  color: var(--q-white);
-  border: none;
-  padding: 12px 24px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(14, 38, 54, 0.1);
+    background-color: #4472c4;
+    color: white;
+    font-weight: bold;
+    border: none;
 }
 
 button:hover {
-  background-color: var(--q-gold);
-  color: var(--q-dark-blue);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(206, 159, 73, 0.2);
+    background-color: #365a9e;
 }
 
-button:active {
-  transform: translateY(0);
+/* --- TABELUL MENIU (Replicare Design Excel) --- */
+.table-responsive {
+    overflow-x: auto; /* Permite scroll orizontal pe mobil */
 }
 
-/* Stiluri Tabel */
 table {
-  width: 100%;
-  max-width: 1000px;
-  border-collapse: collapse;
-  background-color: var(--q-white);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-  overflow: hidden; /* Pentru colțurile rotunjite */
-  margin-bottom: 40px;
-}
-
-/* Header Tabel */
-thead {
-  background-color: var(--q-dark-blue);
-  color: var(--q-white);
-}
-
-th {
-  padding: 15px;
-  text-align: left;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-}
-
-/* Celule Tabel */
-td {
-  padding: 15px;
-  border-bottom: 1px solid var(--q-border);
-  font-size: 0.95rem;
-  vertical-align: top;
-}
-
-/* Efect zebra pentru rânduri */
-tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-
-tbody tr:hover {
-  background-color: #f0f4f8; /* Un albastru foarte deschis la hover */
-}
-
-/* Stiluri specifice pentru coloana Categorie (prima coloană) */
-td:first-child {
-  font-weight: 700;
-  color: var(--q-dark-blue);
-  width: 150px;
-  border-right: 1px solid var(--q-border);
-}
-
-/* Mesaje de Loading și Eroare */
-#loading {
-  font-size: 1.2rem;
-  color: var(--q-gold);
-  font-weight: 600;
-  margin: 20px 0;
-  text-align: center;
-}
-
-#error {
-  color: #dc3545; /* Roșu standard pentru erori */
-  background-color: #ffe6e6;
-  padding: 10px 20px;
-  border-radius: 4px;
-  border: 1px solid #ffcccc;
-  margin: 20px 0;
-  text-align: center;
-}
-
-/* Footer */
-footer {
-  margin-top: auto;
-  font-size: 0.8rem;
-  color: #666;
-  text-align: center;
-  padding: 20px;
-  border-top: 1px solid #eee;
-  width: 100%;
-  background-color: var(--q-white);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.2rem; }
-  
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  
-  button {
     width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  .controls {
-    flex-direction: column;
+    border-collapse: collapse; /* Liniile lipite ca în Excel */
+    min-width: 800px; /* Asigură că nu se înghesuie prea tare */
+}
+
+/* Borduri generale */
+th, td {
+    border: 1px solid #000; /* Bordura neagră specifică Excel */
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+/* --- ZONA DE HEADER (Zilele Săptămânii) --- */
+thead th {
+    background-color: #ffe699; /* Galbenul din Excel */
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: capitalize;
+}
+
+/* Prima celulă din Header (colțul stânga sus) */
+thead th:first-child {
+    background-color: #4472c4; /* Albastru pentru colț, dacă preferi */
+    color: white;
+    width: 150px; /* Lățime fixă pentru coloana de categorii */
+}
+
+/* --- PRIMA COLOANĂ (Categorii: Felul 1, Vegetarian etc.) --- */
+td.course-type {
+    background-color: #4472c4; /* Albastrul închis din stânga */
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+/* --- CONȚINUTUL TABELULUI --- */
+tbody td {
+    background-color: #ffffff;
+    color: black;
+    font-weight: 500;
+}
+
+/* --- RÂNDUL DE SALATĂ (Specific Excel) --- */
+/* Identificăm rândul de Salată (al 5-lea rând în datele noastre) și îl facem verde deschis */
+tbody tr:nth-child(5) td:not(.course-type) {
+    background-color: #e2efda; /* Verdele deschis din poze */
+}
+
+/* --- RESPONSIVE (Mobil) --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px;
+    }
+    
+    th, td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    .controls {
+        width: 100%;
+    }
+    
+    select, button {
+        flex: 1;
+    }
+}
   }
 }
+
 
 
