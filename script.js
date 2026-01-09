@@ -1,42 +1,87 @@
-const fullMenu = {
-    1: [
-        { zi: "Luni", f1: "Supă cremă de dovleac", f2: "Pui cu smântână și mămăligă", desert: "Fructe de sezon", alergeni: "Lactoză, Țelină" },
-        { zi: "Marți", f1: "Ciorbă de perișoare", f2: "Penne cu sos de roșii și busuioc", desert: "Iaurt", alergeni: "Gluten, Ou" }
-        // ... poți adăuga restul zilelor
-    ],
-    2: [
-        { zi: "Luni", f1: "Supă de pui cu tăiței", f2: "Chifteluțe marinate cu piure", desert: "Biscuiți de casă", alergeni: "Gluten" }
-    ],
-    3: [], // Săptămâna 3
-    4: []  // Săptămâna 4
-};
-
-function changeWeek(weekNum) {
-    const container = document.getElementById('menu-display');
-    const buttons = document.querySelectorAll('.tab-btn');
-    
-    // Update butoane
-    buttons.forEach((btn, index) => {
-        btn.classList.toggle('active', index + 1 === weekNum);
-    });
-
-    // Generare carduri
-    const days = fullMenu[weekNum] || [];
-    if (days.length === 0) {
-        container.innerHTML = "<p>Meniul pentru această săptămână nu a fost încă încărcat.</p>";
-        return;
+// Datele meniului - Aici poți modifica mâncarea pentru fiecare zi
+const menuData = [
+    {
+        day: "Luni",
+        soup: "Supă cremă de legume cu crutoane",
+        main: "Piept de pui la grătar cu piure de cartofi",
+        dessert: "Fructe proaspete de sezon"
+    },
+    {
+        day: "Marți",
+        soup: "Ciorbă de văcuță țărănească",
+        main: "Paste Bolognese cu parmezan",
+        dessert: "Iaurt cu miere și nuci"
+    },
+    {
+        day: "Miercuri",
+        soup: "Supă de pui cu tăieței de casă",
+        main: "Pilaf de orez cu ciuperci și salată verde",
+        dessert: "Prăjitură de casă cu mere"
+    },
+    {
+        day: "Joi",
+        soup: "Supă cremă de roșii cu busuioc",
+        main: "Curcan la cuptor cu legume gratinate",
+        dessert: "Salam de biscuiți"
+    },
+    {
+        day: "Vineri",
+        soup: "Ciorbă de perișoare",
+        main: "Pește la cuptor cu mămăliguță și mujdei",
+        dessert: "Plăcintă cu brânză dulce"
     }
+];
 
-    container.innerHTML = days.map(d => `
-        <div class="day-card">
-            <h3>${d.zi}</h3>
-            <div class="dish"><span class="label">Felul 1</span>${d.f1}</div>
-            <div class="dish"><span class="label">Felul 2</span>${d.f2}</div>
-            <div class="dish"><span class="label">Desert</span>${d.desert}</div>
-            <div class="allergen-trigger" data-info="${d.alergeni}">⚠️ Alergeni</div>
-        </div>
-    `).join('');
+// Funcția care generează HTML-ul
+function generateMenu() {
+    const container = document.getElementById('menu-container');
+    
+    // Curățăm containerul înainte (just in case)
+    container.innerHTML = '';
+
+    menuData.forEach(item => {
+        // Creăm un element div pentru card
+        const card = document.createElement('article');
+        card.className = 'day-card';
+
+        // Construim conținutul HTML pentru fiecare zi
+        card.innerHTML = `
+            <div class="card-header">
+                <h2>${item.day}</h2>
+            </div>
+            <div class="card-body">
+                <div class="meal-item">
+                    <span class="meal-icon">🥣</span>
+                    <div class="meal-details">
+                        <h3>Supă / Ciorbă</h3>
+                        <p>${item.soup}</p>
+                    </div>
+                </div>
+                <div class="meal-item">
+                    <span class="meal-icon">🍽️</span>
+                    <div class="meal-details">
+                        <h3>Fel Principal</h3>
+                        <p>${item.main}</p>
+                    </div>
+                </div>
+                <div class="meal-item">
+                    <span class="meal-icon">🍪</span>
+                    <div class="meal-details">
+                        <h3>Gustare / Desert</h3>
+                        <p>${item.dessert}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Adăugăm cardul în pagină
+        container.appendChild(card);
+    });
 }
+
+// Rulăm funcția când pagina s-a încărcat complet
+document.addEventListener('DOMContentLoaded', generateMenu);
 
 // Afișează săptămâna 1 la început
 document.addEventListener('DOMContentLoaded', () => changeWeek(1));
+
