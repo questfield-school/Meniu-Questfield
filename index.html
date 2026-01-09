@@ -1,123 +1,37 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meniu Săptămânal Questfield</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <title>School Menu</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <h1>Questfield <span>Menu</span></h1>
-        </div>
-        <p class="subtitle">Meniul Săptămânal pentru Copii</p>
-    </header>
+<header>
+  <h1 id="title">Meniu Școlar</h1>
 
-    <main>
-        <div id="menu-container" class="menu-grid"></div>
-    </main>
+  <div class="controls">
+    <select id="weekSelector">
+      <option value="1">Săptămâna 1</option>
+      <option value="2">Săptămâna 2</option>
+      <option value="3">Săptămâna 3</option>
+      <option value="4">Săptămâna 4</option>
+    </select>
 
-    <footer>
-        <p>&copy; 2024 Questfield Menu. Poftă bună!</p>
-    </footer>
+    <select id="langSelector">
+      <option value="ro">RO</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+</header>
 
-    <script>
-        // 1. Datele meniului
-        const menuData = [
-            {
-                day: "Luni",
-                soup: "Supă cremă de legume cu crutoane",
-                main: "Piept de pui la grătar cu piure de cartofi",
-                dessert: "Fructe proaspete de sezon"
-            },
-            {
-                day: "Marți",
-                soup: "Ciorbă de văcuță țărănească",
-                main: "Paste Bolognese cu parmezan",
-                dessert: "Iaurt cu miere și nuci"
-            },
-            {
-                day: "Miercuri",
-                soup: "Supă de pui cu tăieței de casă",
-                main: "Pilaf de orez cu ciuperci și salată verde",
-                dessert: "Prăjitură de casă cu mere"
-            },
-            {
-                day: "Joi",
-                soup: "Supă cremă de roșii cu busuioc",
-                main: "Curcan la cuptor cu legume gratinate",
-                dessert: "Salam de biscuiți"
-            },
-            {
-                day: "Vineri",
-                soup: "Ciorbă de perișoare",
-                main: "Pește la cuptor cu mămăliguță și mujdei",
-                dessert: "Plăcintă cu brânză dulce"
-            }
-        ];
+<main id="menu"></main>
 
-        // 2. Funcția de generare
-        function generateMenu() {
-            const container = document.getElementById('menu-container');
-            
-            // Verificăm dacă elementul există
-            if (!container) {
-                console.error("Eroare: Nu am găsit elementul 'menu-container'");
-                return;
-            }
-
-            container.innerHTML = ''; // Curățăm containerul
-
-            menuData.forEach(item => {
-                const card = document.createElement('article');
-                card.className = 'day-card';
-
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h2>${item.day}</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="meal-item">
-                            <span class="meal-icon">🥣</span>
-                            <div class="meal-details">
-                                <h3>Supă / Ciorbă</h3>
-                                <p>${item.soup}</p>
-                            </div>
-                        </div>
-                        <div class="meal-item">
-                            <span class="meal-icon">🍽️</span>
-                            <div class="meal-details">
-                                <h3>Fel Principal</h3>
-                                <p>${item.main}</p>
-                            </div>
-                        </div>
-                        <div class="meal-item">
-                            <span class="meal-icon">🍪</span>
-                            <div class="meal-details">
-                                <h3>Gustare / Desert</h3>
-                                <p>${item.dessert}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-            console.log("Meniul a fost generat cu succes!");
-        }
-
-        // 3. Rulăm funcția imediat
-        generateMenu();
-    </script>
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
-</body>
-</html>
+
+
 
 
