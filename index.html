@@ -1,37 +1,93 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <title>School Menu</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questfield - Meniu Săptămânal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Questfield International College</h1>
+            <p>Meniu Săptămânal</p>
+        </div>
+    </header>
 
-<header>
-  <h1 id="title">Meniu Școlar</h1>
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="container nav-container">
+            <button id="prevWeek" class="nav-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Previous Week</span>
+            </button>
 
-  <div class="controls">
-    <select id="weekSelector">
-      <option value="1">Săptămâna 1</option>
-      <option value="2">Săptămâna 2</option>
-      <option value="3">Săptămâna 3</option>
-      <option value="4">Săptămâna 4</option>
-    </select>
+            <div class="week-info">
+                <div id="weekDates" class="week-dates"></div>
+                <div id="currentWeekBadge" class="current-week-badge" style="display: none;">Current Week</div>
+                <button id="goToCurrentWeek" class="go-to-current" style="display: none;">Go to Current Week</button>
+            </div>
 
-    <select id="langSelector">
-      <option value="ro">RO</option>
-      <option value="en">EN</option>
-    </select>
-  </div>
-</header>
+            <button id="nextWeek" class="nav-button">
+                <span>Next Week</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </nav>
 
-<main id="menu"></main>
+    <!-- Menu Content -->
+    <main class="main-content">
+        <div class="container">
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Se încarcă meniul...</p>
+            </div>
 
-<script src="js/i18n.js"></script>
-<script src="js/app.js"></script>
+            <div id="error" class="error" style="display: none;">
+                <p>Nu s-au putut încărca datele meniului. Vă rugăm să încercați mai târziu.</p>
+            </div>
+
+            <div id="menuTable" class="menu-table-container" style="display: none;">
+                <table class="menu-table">
+                    <thead>
+                        <tr>
+                            <th class="category-header">Categorie</th>
+                            <th>Luni</th>
+                            <th>Marți</th>
+                            <th>Miercuri</th>
+                            <th>Joi</th>
+                            <th>Vineri</th>
+                        </tr>
+                    </thead>
+                    <tbody id="menuTableBody">
+                        <!-- Content will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>Meniul poate suferi modificări în funcție de disponibilitatea ingredientelor.</p>
+                <p class="footer-contact">Pentru întrebări, contactați bucătăria la: office@questfield.ro</p>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2026 Questfield International College. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
 
 
 
