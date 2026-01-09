@@ -1,32 +1,31 @@
-const i18n = {
-  ro: {
-    title: "Meniu Școlar",
-    normal: "Meniu normal",
-    vegetarian: "Meniu vegetarian",
-    days: {
-      Monday: "Luni",
-      Tuesday: "Marți",
-      Wednesday: "Miercuri",
-      Thursday: "Joi",
-      Friday: "Vineri"
-    }
-  },
-  en: {
-    title: "School Menu",
-    normal: "Regular menu",
-    vegetarian: "Vegetarian menu",
-    days: {
-      Monday: "Monday",
-      Tuesday: "Tuesday",
-      Wednesday: "Wednesday",
-      Thursday: "Thursday",
-      Friday: "Friday"
-    }
-  }
-};
+let i18n = {};
 
+fetch("https://opensheet.elk.sh/1RpPfd-5vti-R4TBKCusr1gok-O7eTSdC42be_YlwSkA/i18n")
+  .then(response => response.json())
+  .then(rows => {
+    rows.forEach(row => {
+      const { lang, key, value } = row;
 
-// Afișează săptămâna 1 la început
-document.addEventListener('DOMContentLoaded', () => changeWeek(1));
+      if (!i18n[lang]) {
+        i18n[lang] = {
+          days: {}
+        };
+      }
+
+      if (key.startsWith("days.")) {
+        const day = key.split(".")[1];
+        i18n[lang].days[day] = value;
+      } else {
+        i18n[lang][key] = value;
+      }
+    });
+
+    // 👉 pornește aplicația DUPĂ ce se încarcă traducerile
+    changeWeek(1);
+  })
+  .catch(error => {
+    console.error("Eroare la încărcarea i18n:", error);
+  });
+
 
 
