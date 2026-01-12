@@ -7,6 +7,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <style>
         /* --- CULORI DESIGN --- */
@@ -160,7 +162,6 @@
         }
 
         /* --- STILURI PENTRU ZIUA DE AZI (HIGHLIGHT) --- */
-        /* Aplicam highlight pe header (TH) */
         th.is-today {
             color: #E53E3E; /* Text rosu pentru ziua curenta */
             border-bottom: 3px solid #E53E3E;
@@ -169,7 +170,6 @@
             content: ' (AZI)'; font-size: 0.7em; margin-left: 5px; vertical-align: middle; font-weight: 800;
         }
 
-        /* Aplicam highlight pe celule (TD) */
         td.is-today {
             background-color: var(--q-highlight-bg) !important; 
             border: 2px solid var(--q-highlight-border) !important;
@@ -179,17 +179,29 @@
 
         tr.row-salad td:not(:first-child) { border-bottom: 3px solid #E2EFDA; }
         
+        /* --- STIL NOU PENTRU LOADER (Lottie) --- */
         .loader {
             display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(254, 252, 245, 0.9); z-index: 10;
+            background: var(--q-cream-bg); 
+            z-index: 20;
             justify-content: center; align-items: center; flex-direction: column; color: var(--q-blue);
+            border-radius: 8px;
         }
-        .spinner {
-            border: 4px solid #f3f3f3; border-top: 4px solid var(--q-gold);
-            border-radius: 50%; width: 40px; height: 40px;
-            animation: spin 1s linear infinite; margin-bottom: 15px;
+        
+        /* Textul de sub animatie */
+        #loaderText {
+            margin-top: -20px; 
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--q-blue);
+            animation: pulse 1.5s infinite ease-in-out;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
         
         footer { margin-top: 40px; text-align: center; font-size: 0.8rem; color: #AAA; }
     </style>
@@ -220,9 +232,20 @@
 
     <div class="container">
         <div class="table-wrap">
+            
             <div id="loader" class="loader">
-                <div class="spinner"></div><span id="loaderText">Se încarcă...</span>
+                <lottie-player 
+                    src="https://api.npoint.io/eaa00a811379b6194348" 
+                    background="transparent" 
+                    speed="1" 
+                    style="width: 300px; height: 300px;" 
+                    loop 
+                    autoplay>
+                </lottie-player>
+                
+                <span id="loaderText">Pregătim meniul...</span>
             </div>
+
             <table id="menuTable">
                 <thead id="tableHeader"></thead>
                 <tbody id="tableBody"></tbody>
@@ -249,15 +272,15 @@
         const TEXTS = {
             ro: {
                 title: "Meniul Săptămânal",
-                loading: "Se încarcă meniul...",
+                loading: "Pregătim meniul...", 
                 langBtn: "Switch to English",
                 week: "Săptămâna",
-                currWeek: "SĂPTĂMÂNA CURENTĂ", // Textul pentru badge
+                currWeek: "SĂPTĂMÂNA CURENTĂ", 
                 err: "Nu s-au găsit datele pentru această săptămână."
             },
             en: {
                 title: "Weekly Lunch Menu",
-                loading: "Loading menu...",
+                loading: "Preparing the menu...",
                 langBtn: "Schimbă în Română",
                 week: "Week",
                 currWeek: "CURRENT WEEK",
@@ -275,7 +298,6 @@
             return `${dd}.${mm}`;
         }
 
-        // Functie helper pentru a compara daca doua date sunt in aceeasi zi
         function isSameDay(d1, d2) {
             return d1.getFullYear() === d2.getFullYear() &&
                    d1.getMonth() === d2.getMonth() &&
@@ -288,24 +310,20 @@
             let activeIndex = 0; 
 
             for(let i=0; i<4; i++) {
-                // Calculam startul si sfarsitul saptamanii curente din bucla
                 let weekStart = new Date(startDate); 
                 weekStart.setDate(startDate.getDate() + (i * 7)); 
                 
                 let weekEnd = new Date(weekStart); 
                 weekEnd.setDate(weekStart.getDate() + 4); 
 
-                // Calculam Duminica saptamanii pentru a vedea daca "azi" se incadreaza in ea
                 let sundayLimit = new Date(weekStart);
                 sundayLimit.setDate(weekStart.getDate() + 6);
 
-                // Verificam daca AZI este in aceasta saptamana
                 let isCurrent = (today >= weekStart && today <= sundayLimit);
                 if(isCurrent) {
                     activeIndex = i;
                 }
 
-                // Configuram butonul
                 let btn = document.getElementById(`btnW${i}`);
                 if(btn) {
                     btn.dataset.dateText = `${formatDate(weekStart)} - ${formatDate(weekEnd)}`;
@@ -371,7 +389,10 @@
                     const parsed = processExcelData(results.data);
                     cachedData[currentWeekIndex] = parsed;
                     renderTable(parsed);
-                    loader.style.display = 'none';
+                    // Adaugăm un mic delay ca să se vadă animația puțin, chiar dacă se încarcă rapid
+                    setTimeout(() => {
+                         loader.style.display = 'none';
+                    }, 800); 
                 },
                 error: function() {
                     document.getElementById('tableBody').innerHTML = `<tr><td colspan="6">Eroare încărcare date.</td></tr>`;
@@ -444,20 +465,16 @@
                 tbody.innerHTML = `<tr><td colspan="6" style="padding:20px;">${TEXTS[currentLang].err}</td></tr>`; return;
             }
 
-            // --- LOGICA NOUĂ DE DATĂ (METODA CALENDAR) ---
-            // 1. Calculam data de start a saptamanii SELECTATE (nu a celei curente)
             let selectedWeekStart = new Date(MENU_START_DATE);
             selectedWeekStart.setDate(selectedWeekStart.getDate() + (currentWeekIndex * 7));
 
-            let today = new Date(); // Data de azi
+            let today = new Date();
 
             let thRow = `<th></th>`;
             activeData.days.forEach((d, colIndex) => {
-                // 2. Calculam data specifica pentru acea coloana (Luni, Marti...)
                 let columnDate = new Date(selectedWeekStart);
                 columnDate.setDate(selectedWeekStart.getDate() + colIndex);
 
-                // 3. Verificam daca data coloanei este egala cu data de azi
                 let isToday = isSameDay(columnDate, today);
                 let cls = isToday ? 'class="is-today"' : '';
                 
@@ -476,7 +493,6 @@
                 row.food.forEach((f, colIndex) => {
                     let td = document.createElement('td'); td.innerText = f || '-';
                     
-                    // Recalculam aceeasi logica pentru celulele de mancare
                     let columnDate = new Date(selectedWeekStart);
                     columnDate.setDate(selectedWeekStart.getDate() + colIndex);
                     
