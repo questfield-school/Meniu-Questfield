@@ -10,19 +10,18 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <style>
-        /* --- CULORI DESIGN --- */
+        /* --- 1. DEFINIRE CULORI --- */
         :root {
-            --q-blue: #1D4363;       /* Albastru Marin închis */
-            --q-gold: #FFD700;       /* Galben intens */
-            --q-cream-bg: #FEFCF5;   /* Fundal pagină */
-            
+            --q-blue: #1D4363;
+            --q-gold: #FFD700;
+            --q-cream-bg: #FEFCF5;
+            --q-white: #FFFFFF;
+            --q-text-dark: #111111;
             --q-highlight-bg: #fffde7; 
             --q-highlight-border: #FFD700;
-            
-            --q-white: #FFFFFF;
-            --q-text-dark: #111111;  
         }
 
+        /* --- 2. LAYOUT PRINCIPAL --- */
         body {
             font-family: 'Roboto', 'Montserrat', sans-serif;
             background-color: var(--q-cream-bg);
@@ -31,7 +30,16 @@
             min-height: 100vh;
         }
 
-        /* HEADER */
+        .container {
+            width: 100%; max-width: 1100px;
+            background: var(--q-cream-bg); 
+            margin: 0 auto; 
+            position: relative; 
+            min-height: 50vh; /* Asigură înălțime pentru loader */
+            display: flex; flex-direction: column;
+        }
+
+        /* --- 3. HEADER & SWITCHER LIMBA --- */
         .site-header {
             width: 100%; max-width: 1100px;
             display: flex; justify-content: space-between; align-items: center;
@@ -44,102 +52,63 @@
             text-transform: uppercase; letter-spacing: 1px;
             font-size: 1.1rem;
         }
-
-        /* --- SWITCHER DE LIMBĂ --- */
+        
+        /* Stil Buton Limba Mare */
         .lang-switcher-container {
-            display: flex;
-            background: white;
-            border: 2px solid var(--q-blue);
-            border-radius: 30px;
-            padding: 4px;
-            gap: 5px;
+            display: flex; background: white;
+            border: 2px solid var(--q-blue); border-radius: 30px;
+            padding: 4px; gap: 5px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            user-select: none; 
+            cursor: pointer; user-select: none; 
             -webkit-tap-highlight-color: transparent;
         }
-
         .lang-option {
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-            color: var(--q-blue);
+            padding: 8px 16px; border-radius: 25px;
+            font-weight: 700; font-size: 1rem;
+            display: flex; align-items: center; gap: 6px;
+            transition: all 0.3s ease; color: var(--q-blue);
         }
-
         .lang-option.active {
-            background-color: var(--q-blue);
-            color: var(--q-white);
+            background-color: var(--q-blue); color: var(--q-white);
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-
-        .flag-icon {
-            font-size: 1.2rem;
-            line-height: 1;
-        }
+        .flag-icon { font-size: 1.2rem; line-height: 1; }
 
         h1.page-title {
-            color: var(--q-text-dark); 
-            font-size: 2.2rem; font-weight: 700;
+            color: var(--q-text-dark); font-size: 2.2rem; font-weight: 700;
             text-align: center; margin: 0 0 30px 0;
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* NAVIGATIE BUTOANE */
+        /* --- 4. NAVIGATIE BUTOANE (FIX OPTIMIZAT) --- */
         .week-nav {
             display: flex; justify-content: center; gap: 15px;
-            margin-bottom: 30px; 
-            flex-wrap: wrap;
+            margin-bottom: 30px; flex-wrap: wrap;
             width: 100%; max-width: 900px;
         }
 
         .week-btn {
-            background-color: var(--q-blue); 
-            color: var(--q-gold);            
+            background-color: var(--q-blue); color: var(--q-gold);            
             border: none; padding: 12px 10px;
-            font-family: 'Montserrat', sans-serif; 
-            font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease;
+            font-family: 'Montserrat', sans-serif; font-size: 0.95rem; 
+            cursor: pointer; transition: all 0.2s ease;
             min-width: 160px; text-align: center; border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 70px;
-            position: relative; 
-            overflow: visible;
+            min-height: 70px; position: relative; overflow: visible;
         }
-        
-        .week-btn:hover { 
-            transform: translateY(-2px); 
-            filter: brightness(1.1);
-        }
-
+        .week-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
         .week-btn.active {
-            border: 3px solid var(--q-gold); 
-            background-color: #163a57; 
+            border: 3px solid var(--q-gold); background-color: #163a57; 
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
         }
 
-        /* ETICHETA "SAPTAMANA CURENTA" */
         .current-badge {
-            position: absolute;
-            bottom: -28px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #E53E3E; 
-            color: white; 
-            font-size: 0.70rem; 
-            text-transform: uppercase; 
-            font-weight: 800; 
-            letter-spacing: 0.5px;
-            padding: 3px 8px; 
-            border-radius: 20px;
-            white-space: nowrap;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            z-index: 10;
-            pointer-events: none;
+            position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%);
+            background-color: #E53E3E; color: white; 
+            font-size: 0.70rem; text-transform: uppercase; font-weight: 800; 
+            padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 10;
         }
         .current-badge::before {
             content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
@@ -147,176 +116,65 @@
             border-color: transparent transparent #E53E3E transparent;
         }
 
-        /* --- CONTAINER GENERAL --- */
-        .container {
-            width: 100%; max-width: 1100px;
-            background: var(--q-cream-bg); 
-            margin: 0 auto; 
-            
-            /* Inaltime minima generoasa pentru a mentine layout-ul stabil */
-            min-height: 60vh;  
-            display: flex;     
-            flex-direction: column;
-            justify-content: flex-start; 
-            align-items: stretch; 
-            position: relative;
-        }
-        
-        /* Cand se incarca (loaderul e vizibil), centram totul (adica omida) */
-        .container.is-loading {
-            justify-content: center; 
-            align-items: center;     
-        }
-
-        /* --- LOADER (OMIDA) --- */
-        /* Omida este ascunsa by default si apare doar cand avem nevoie */
-        .loader {
+        /* --- 5. LOADER (Omida) --- */
+        /* Loader-ul apare SINGUR, centrat in container */
+        .loader-wrapper {
             display: none; /* Ascuns initial */
-            flex-direction: column; 
-            align-items: center;
-            justify-content: center;
-            color: var(--q-blue);
-            border-radius: 12px;
+            flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; height: 100%; min-height: 300px;
+            flex: 1;
         }
-        
         #loaderText {
             margin-top: -20px; font-weight: 700; font-size: 1.2rem;
             color: var(--q-blue); animation: pulse 1.5s infinite ease-in-out;
-            text-align: center;
         }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
-        /* --- STILURI PENTRU DESKTOP (TABEL) --- */
-        .desktop-view {
-            display: block;
-            overflow-x: auto; 
-            min-height: 300px; 
-            padding-bottom: 20px; 
+        /* --- 6. CONTINUT (Tabel/Carduri) --- */
+        /* Cand incarcam, aceste clase primesc display:none din JS */
+        .content-wrapper {
+            display: block; width: 100%; animation: fadeIn 0.5s ease;
         }
-        
-        table { 
-            width: 100%; 
-            border-collapse: separate; 
-            border-spacing: 8px; 
-            min-width: 800px; 
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        th {
-            padding: 15px; text-align: center; 
-            font-size: 1.1rem; color: #111; font-weight: 800; 
-            text-transform: capitalize;
-            border-bottom: 2px solid transparent;
-        }
-
-        td {
-            background-color: var(--q-white); padding: 15px;
-            border-radius: 8px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            vertical-align: top; font-size: 0.95rem; line-height: 1.4;
-            color: #222222; border: 1px solid #DDD; text-align: center;
-            font-weight: 500;
-        }
-
-        td:first-child {
-            background-color: transparent; box-shadow: none; border: none;
-            text-align: right; font-weight: 800; color: var(--q-blue);
-            width: 110px; vertical-align: middle; 
-            font-size: 1rem; padding-right: 15px;
-        }
-
+        /* Desktop Table */
+        .desktop-view { display: block; overflow-x: auto; padding-bottom: 20px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 8px; min-width: 800px; }
+        th { padding: 15px; text-align: center; font-size: 1.1rem; color: #111; font-weight: 800; text-transform: capitalize; }
+        td { background-color: var(--q-white); padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); vertical-align: top; font-size: 0.95rem; line-height: 1.4; color: #222222; border: 1px solid #DDD; text-align: center; font-weight: 500; }
+        td:first-child { background-color: transparent; box-shadow: none; border: none; text-align: right; font-weight: 800; color: var(--q-blue); width: 110px; vertical-align: middle; font-size: 1rem; padding-right: 15px; }
         th.is-today { color: #E53E3E; border-bottom: 3px solid #E53E3E; }
         th.is-today::after { content: ' (AZI)'; font-size: 0.7em; margin-left: 5px; vertical-align: middle; font-weight: 800; }
-
-        td.is-today {
-            background-color: var(--q-highlight-bg) !important; 
-            border: 2px solid var(--q-highlight-border) !important;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4) !important;
-        }
-
+        td.is-today { background-color: var(--q-highlight-bg) !important; border: 2px solid var(--q-highlight-border) !important; box-shadow: 0 0 10px rgba(255, 215, 0, 0.4) !important; }
         tr.row-salad td:not(:first-child) { border-bottom: 3px solid #E2EFDA; }
-        
-        /* --- STILURI PENTRU MOBILE (CARDURI) --- */
+
+        /* Mobile Cards */
         .mobile-view { display: none; width: 100%; }
-
-        .mobile-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid #EEE;
-        }
-
-        .mobile-card.is-today-card {
-            border: 2px solid var(--q-gold);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-            background-color: var(--q-highlight-bg);
-        }
-
-        .mobile-card-header {
-            background-color: var(--q-blue);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .mobile-card.is-today-card .mobile-card-header {
-            background-color: #E53E3E;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-        }
-
+        .mobile-card { background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 20px; overflow: hidden; border: 1px solid #EEE; }
+        .mobile-card.is-today-card { border: 2px solid var(--q-gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); background-color: var(--q-highlight-bg); }
+        .mobile-card-header { background-color: var(--q-blue); color: white; padding: 15px; text-align: center; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .mobile-card.is-today-card .mobile-card-header { background-color: #E53E3E; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .mobile-card-content { padding: 15px; }
-
-        .mobile-menu-row {
-            display: flex;
-            margin-bottom: 12px;
-            border-bottom: 1px solid #EEE;
-            padding-bottom: 12px;
-        }
+        .mobile-menu-row { display: flex; margin-bottom: 12px; border-bottom: 1px solid #EEE; padding-bottom: 12px; }
         .mobile-menu-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-        .mobile-category {
-            width: 35%;
-            font-weight: 800;
-            color: var(--q-blue);
-            font-size: 0.9rem;
-            padding-right: 10px;
-            display: flex; align-items: center;
-        }
-        .mobile-food {
-            width: 65%;
-            font-size: 0.95rem;
-            color: #333;
-            line-height: 1.4;
-        }
+        .mobile-category { width: 35%; font-weight: 800; color: var(--q-blue); font-size: 0.9rem; padding-right: 10px; display: flex; align-items: center; }
+        .mobile-food { width: 65%; font-size: 0.95rem; color: #333; line-height: 1.4; }
 
         footer { margin-top: 40px; text-align: center; font-size: 0.8rem; color: #AAA; }
 
-        /* ========================================= */
-        /* === MOBILE RESPONSIVE LOGIC === */
-        /* ========================================= */
+        /* --- 7. RESPONSIVE MOBILE FIXES --- */
         @media (max-width: 768px) {
             body { padding: 10px; }
             .site-header { flex-direction: column; gap: 15px; margin-bottom: 15px; }
             h1.page-title { font-size: 1.6rem; margin-bottom: 20px; }
 
-            /* Navigatie butoane 2x2 */
+            /* AICI ESTE FIX-UL PENTRU BUTOANE SUPRAPUSE */
             .week-nav { 
-                gap: 15px; 
-                margin-bottom: 40px;
-                /* FIX OVERLAP: Spatiu mare intre randuri */
+                gap: 15px; margin-bottom: 40px;
+                /* Spatiu mare intre randuri pentru a acomoda eticheta */
                 row-gap: 50px; 
             }
-            .week-btn { 
-                min-width: 40%; flex: 1 1 40%; 
-                padding: 10px; min-height: 60px;
-                /* FIX EXTRA: Spatiu sub buton */
-                margin-bottom: 5px; 
-            }
+            .week-btn { min-width: 40%; flex: 1 1 40%; padding: 10px; min-height: 60px; }
             .current-badge { bottom: -28px; font-size: 0.65rem; }
 
             .desktop-view { display: none; } 
@@ -336,14 +194,9 @@
         </div>
 
         <div class="lang-switcher-container" onclick="toggleLang()">
-            <div id="langRO" class="lang-option active">
-                <span class="flag-icon">🇷🇴</span> RO
-            </div>
-            <div id="langEN" class="lang-option">
-                <span class="flag-icon">🇬🇧</span> EN
-            </div>
+            <div id="langRO" class="lang-option active"><span class="flag-icon">🇷🇴</span> RO</div>
+            <div id="langEN" class="lang-option"><span class="flag-icon">🇬🇧</span> EN</div>
         </div>
-
     </div>
 
     <h1 class="page-title" id="pageTitle">Meniul Săptămânal</h1>
@@ -355,95 +208,72 @@
         <button onclick="changeWeek(3)" id="btnW3" class="week-btn">Week 4</button>
     </div>
 
-    <div class="container is-loading" id="mainContainer">
+    <div class="container">
         
-        <div id="loader" class="loader">
+        <div id="loaderArea" class="loader-wrapper">
             <lottie-player src="https://api.npoint.io/eaa00a811379b6194348" background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></lottie-player>
             <span id="loaderText">Pregătim meniul...</span>
         </div>
 
-        <div class="table-wrap desktop-view">
-            <table id="menuTable">
-                <thead id="tableHeader"></thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
-
-        <div class="mobile-view" id="mobileContainer">
+        <div id="contentArea" class="content-wrapper">
+            <div class="table-wrap desktop-view">
+                <table id="menuTable">
+                    <thead id="tableHeader"></thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
             </div>
+
+            <div class="mobile-view" id="mobileContainer">
+                </div>
+        </div>
 
     </div>
 
     <footer><div>&copy; 2026 Questfield International College</div></footer>
 
     <script>
-        // ===============================================================
-        // DATA DE START A MENIULUI (LUNI) - SETATA LA ZIUA DE AZI (12.01)
-        // ===============================================================
+        // ==========================================
+        // CONFIGURARE
+        // ==========================================
         const MENU_START_DATE = "2026-01-12"; 
-        // ===============================================================
-
         const LINKS = [
             "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=0&single=true&output=csv",
             "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=1317978849&single=true&output=csv",
             "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=11715441&single=true&output=csv",
             "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=184508981&single=true&output=csv"
         ];
-
         const TEXTS = {
-            ro: {
-                title: "Meniul Săptămânal",
-                loading: "Pregătim meniul...", 
-                week: "Săptămâna",
-                currWeek: "SĂPTĂMÂNA CURENTĂ", 
-                err: "Nu s-au găsit datele pentru această săptămână.",
-                todayLabel: "AZI"
-            },
-            en: {
-                title: "Weekly Lunch Menu",
-                loading: "Preparing the menu...",
-                week: "Week",
-                currWeek: "CURRENT WEEK",
-                err: "No data found for this week.",
-                todayLabel: "TODAY"
-            }
+            ro: { title: "Meniul Săptămânal", loading: "Pregătim meniul...", week: "Săptămâna", currWeek: "SĂPTĂMÂNA CURENTĂ", err: "Nu s-au găsit datele.", todayLabel: "AZI" },
+            en: { title: "Weekly Lunch Menu", loading: "Preparing the menu...", week: "Week", currWeek: "CURRENT WEEK", err: "No data found.", todayLabel: "TODAY" }
         };
 
         let currentLang = 'ro'; 
         let currentWeekIndex = 0;
         let cachedData = {};
 
+        // --- UTILS ---
         function formatDate(d) {
             let dd = d.getDate().toString().padStart(2,'0');
             let mm = (d.getMonth()+1).toString().padStart(2,'0');
             return `${dd}.${mm}`;
         }
-
         function isSameDay(d1, d2) {
-            return d1.getFullYear() === d2.getFullYear() &&
-                   d1.getMonth() === d2.getMonth() &&
-                   d1.getDate() === d2.getDate();
+            return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
         }
 
+        // --- LOGICA DE PAGINA ---
         function initPage() {
             let startDate = new Date(MENU_START_DATE);
             let today = new Date();
             let activeIndex = 0; 
 
             for(let i=0; i<4; i++) {
-                let weekStart = new Date(startDate); 
-                weekStart.setDate(startDate.getDate() + (i * 7)); 
-                
-                let weekEnd = new Date(weekStart); 
-                weekEnd.setDate(weekStart.getDate() + 4); 
-
-                let sundayLimit = new Date(weekStart);
-                sundayLimit.setDate(weekStart.getDate() + 6);
-
+                let weekStart = new Date(startDate); weekStart.setDate(startDate.getDate() + (i * 7)); 
+                let weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 4); 
+                let sundayLimit = new Date(weekStart); sundayLimit.setDate(weekStart.getDate() + 6);
                 let isCurrent = (today >= weekStart && today <= sundayLimit);
-                if(isCurrent) {
-                    activeIndex = i;
-                }
+                
+                if(isCurrent) activeIndex = i;
 
                 let btn = document.getElementById(`btnW${i}`);
                 if(btn) {
@@ -452,7 +282,6 @@
                     btn.dataset.isCurrent = isCurrent ? "true" : "false"; 
                 }
             }
-
             updateStaticTexts();
             changeWeek(activeIndex);
         }
@@ -461,7 +290,6 @@
             const t = TEXTS[currentLang];
             document.getElementById('pageTitle').textContent = t.title;
             document.getElementById('loaderText').textContent = t.loading;
-            
             for(let i=0; i<4; i++) {
                 let btn = document.getElementById(`btnW${i}`);
                 if(btn) updateButtonText(btn);
@@ -472,10 +300,7 @@
             const t = TEXTS[currentLang];
             let html = `<div style="font-weight:700; font-size:1.1rem; color:var(--q-gold)">${t.week} ${btn.dataset.weekNum}</div>`;
             html += `<div style="font-size:0.85rem; opacity:0.9; color:white; font-weight:400; margin-top:2px">${btn.dataset.dateText}</div>`;
-            
-            if(btn.dataset.isCurrent === "true") {
-                html += `<div class="current-badge">${t.currWeek}</div>`;
-            }
+            if(btn.dataset.isCurrent === "true") html += `<div class="current-badge">${t.currWeek}</div>`;
             btn.innerHTML = html;
         }
 
@@ -489,39 +314,24 @@
 
         function toggleLang() {
             currentLang = currentLang === 'ro' ? 'en' : 'ro';
-            
             const roBtn = document.getElementById('langRO');
             const enBtn = document.getElementById('langEN');
-
-            if(currentLang === 'ro') {
-                roBtn.classList.add('active');
-                enBtn.classList.remove('active');
-            } else {
-                enBtn.classList.add('active');
-                roBtn.classList.remove('active');
-            }
-
+            if(currentLang === 'ro') { roBtn.classList.add('active'); enBtn.classList.remove('active'); }
+            else { enBtn.classList.add('active'); roBtn.classList.remove('active'); }
+            
             updateStaticTexts();
-            if(cachedData[currentWeekIndex]) {
-                renderData(cachedData[currentWeekIndex]);
-            } else {
-                changeWeek(currentWeekIndex);
-            }
+            if(cachedData[currentWeekIndex]) renderData(cachedData[currentWeekIndex]);
+            else changeWeek(currentWeekIndex);
         }
 
+        // --- CORE: INCARCARE DATE ---
         function loadData(url) {
-            if(url.includes("ID-UL-TĂU") || url.length < 10) return;
+            if(url.includes("ID-UL-TĂU")) return;
             
-            const loader = document.getElementById('loader');
-            const container = document.getElementById('mainContainer');
-            
-            // --- CURATARE INSTANTANEE (Stergem meniul vechi) ---
-            document.getElementById('mobileContainer').innerHTML = '';
-            document.getElementById('tableBody').innerHTML = '';
-            
-            // Aratam loaderul, centram containerul
-            loader.style.display = 'flex';
-            container.classList.add('is-loading');
+            // 1. ASCUNDEM CONTINUTUL VECHI
+            document.getElementById('contentArea').style.display = 'none';
+            // 2. ARATAM LOADER-UL (Singur pe ecran)
+            document.getElementById('loaderArea').style.display = 'flex';
             
             const bust = url + "&t=" + new Date().getTime();
 
@@ -530,18 +340,20 @@
                 complete: function(results) {
                     const parsed = processExcelData(results.data);
                     cachedData[currentWeekIndex] = parsed;
+                    
+                    // Renderizam in background
                     renderData(parsed);
                     
+                    // 3. SWITCH: Ascundem loader, aratam continut nou
                     setTimeout(() => { 
-                        loader.style.display = 'none'; 
-                        // Scoatem clasa de centrare ca sa lasam tabelul sa se intinda
-                        container.classList.remove('is-loading');
+                        document.getElementById('loaderArea').style.display = 'none';
+                        document.getElementById('contentArea').style.display = 'block';
                     }, 600); 
                 },
                 error: function() {
-                    document.getElementById('tableBody').innerHTML = `<tr><td colspan="6">Eroare încărcare date.</td></tr>`;
-                    loader.style.display = 'none';
-                    container.classList.remove('is-loading');
+                    document.getElementById('loaderArea').style.display = 'none';
+                    document.getElementById('contentArea').style.display = 'block';
+                    document.getElementById('mobileContainer').innerHTML = 'Eroare date.';
                 }
             });
         }
@@ -575,7 +387,6 @@
             let items = [];
             let r = dataCoords.row + 1;
             let safety = 0;
-
             while(r < rows.length && safety < 10) {
                 let rowData = rows[r];
                 let hasFood = false;
@@ -596,15 +407,6 @@
         }
 
         function renderData(data) {
-            renderDesktopTable(data);
-            renderMobileCards(data);
-        }
-
-        function renderDesktopTable(data) {
-            const tbody = document.getElementById('tableBody');
-            const thead = document.getElementById('tableHeader');
-            tbody.innerHTML = ''; thead.innerHTML = '';
-            
             if(!data) return;
             const activeData = currentLang === 'ro' ? (data.ro || data.en) : (data.en || data.ro);
             if(!activeData) return;
@@ -613,82 +415,52 @@
             selectedWeekStart.setDate(selectedWeekStart.getDate() + (currentWeekIndex * 7));
             let today = new Date();
 
+            // RENDER DESKTOP
+            const tbody = document.getElementById('tableBody');
+            const thead = document.getElementById('tableHeader');
+            tbody.innerHTML = ''; thead.innerHTML = '';
+            
             let thRow = `<th></th>`;
             activeData.days.forEach((d, colIndex) => {
-                let columnDate = new Date(selectedWeekStart);
-                columnDate.setDate(selectedWeekStart.getDate() + colIndex);
-                let isToday = isSameDay(columnDate, today);
-                let cls = isToday ? 'class="is-today"' : '';
-                thRow += `<th ${cls}>${d}</th>`;
+                let colDate = new Date(selectedWeekStart); colDate.setDate(selectedWeekStart.getDate() + colIndex);
+                let isToday = isSameDay(colDate, today);
+                thRow += `<th ${isToday ? 'class="is-today"' : ''}>${d}</th>`;
             });
             thead.innerHTML = thRow;
 
             activeData.items.forEach(row => {
                 let tr = document.createElement('tr');
-                let catLower = row.category.toLowerCase();
-                if(catLower.includes('salad') || catLower.includes('salat') || catLower.includes('snack') || catLower.includes('gustar')) {
-                    tr.classList.add('row-salad');
-                }
+                if(row.category.toLowerCase().match(/salad|salat|snack|gustar/)) tr.classList.add('row-salad');
                 let tdCat = document.createElement('td'); tdCat.innerHTML = row.category; tr.appendChild(tdCat);
-                
                 row.food.forEach((f, colIndex) => {
                     let td = document.createElement('td'); td.innerText = f || '-';
-                    let columnDate = new Date(selectedWeekStart);
-                    columnDate.setDate(selectedWeekStart.getDate() + colIndex);
-                    if(isSameDay(columnDate, today)) td.classList.add('is-today');
+                    let colDate = new Date(selectedWeekStart); colDate.setDate(selectedWeekStart.getDate() + colIndex);
+                    if(isSameDay(colDate, today)) td.classList.add('is-today');
                     tr.appendChild(td);
                 });
                 tbody.appendChild(tr);
             });
-        }
 
-        function renderMobileCards(data) {
+            // RENDER MOBILE
             const container = document.getElementById('mobileContainer');
             container.innerHTML = '';
-
-            if(!data) {
-                container.innerHTML = `<div style="text-align:center; padding:20px;">${TEXTS[currentLang].err}</div>`;
-                return;
-            }
-
-            const activeData = currentLang === 'ro' ? (data.ro || data.en) : (data.en || data.ro);
-            if(!activeData) return;
-
-            let selectedWeekStart = new Date(MENU_START_DATE);
-            selectedWeekStart.setDate(selectedWeekStart.getDate() + (currentWeekIndex * 7));
-            let today = new Date();
-
             for(let colIndex = 0; colIndex < 5; colIndex++) {
-                let dayName = activeData.days[colIndex]; 
-                let columnDate = new Date(selectedWeekStart);
-                columnDate.setDate(selectedWeekStart.getDate() + colIndex);
-                let isToday = isSameDay(columnDate, today);
-
+                let dayName = activeData.days[colIndex];
+                let colDate = new Date(selectedWeekStart); colDate.setDate(selectedWeekStart.getDate() + colIndex);
+                let isToday = isSameDay(colDate, today);
+                
                 let card = document.createElement('div');
                 card.className = 'mobile-card' + (isToday ? ' is-today-card' : '');
-
-                let headerHtml = dayName;
-                if(isToday) {
-                    headerHtml += ` <span style="background:white; color:#E53E3E; font-size:0.7em; padding:2px 6px; border-radius:4px; margin-left:8px;">${TEXTS[currentLang].todayLabel}</span>`;
-                }
-
+                let headerHtml = dayName + (isToday ? ` <span style="background:white; color:#E53E3E; font-size:0.7em; padding:2px 6px; border-radius:4px; margin-left:8px;">${TEXTS[currentLang].todayLabel}</span>` : '');
+                
                 let contentHtml = '';
                 activeData.items.forEach(row => {
                     let foodItem = row.food[colIndex] || '-';
                     if(foodItem.trim().length > 1 || foodItem !== '-') {
-                        contentHtml += `
-                            <div class="mobile-menu-row">
-                                <div class="mobile-category">${row.category}</div>
-                                <div class="mobile-food">${foodItem}</div>
-                            </div>
-                        `;
+                        contentHtml += `<div class="mobile-menu-row"><div class="mobile-category">${row.category}</div><div class="mobile-food">${foodItem}</div></div>`;
                     }
                 });
-
-                card.innerHTML = `
-                    <div class="mobile-card-header">${headerHtml}</div>
-                    <div class="mobile-card-content">${contentHtml}</div>
-                `;
+                card.innerHTML = `<div class="mobile-card-header">${headerHtml}</div><div class="mobile-card-content">${contentHtml}</div>`;
                 container.appendChild(card);
             }
         }
