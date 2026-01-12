@@ -44,21 +44,47 @@
             text-transform: uppercase; letter-spacing: 1px;
             font-size: 1.1rem;
         }
-        
-        /* UPDATE: Cursor pointer si efect hover pe steaguri */
-        .flags { 
-            font-size: 1.6rem; 
-            cursor: pointer; 
-            user-select: none;
-            transition: transform 0.2s ease;
-            padding: 5px;
+
+        /* --- NOUL SWITCHER DE LIMBĂ (STIL BUTON MARE) --- */
+        .lang-switcher-container {
+            display: flex;
+            background: white;
+            border: 2px solid var(--q-blue);
+            border-radius: 30px;
+            padding: 4px;
+            gap: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            /* Previne selectarea textului la dublu-click */
+            user-select: none; 
+            -webkit-tap-highlight-color: transparent;
         }
-        .flags:hover {
-            transform: scale(1.1);
+
+        .lang-option {
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            color: var(--q-blue);
         }
-        .flags:active {
-            transform: scale(0.95);
+
+        /* Starea ACTIVA (Limba selectata) */
+        .lang-option.active {
+            background-color: var(--q-blue);
+            color: var(--q-white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
+
+        /* Steagurile sunt emoji-uri, le facem un pic mai mari */
+        .flag-icon {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
 
         h1.page-title {
             color: var(--q-text-dark); 
@@ -283,7 +309,16 @@
             </svg>
             <div style="line-height:1.2">QUESTFIELD<br><span style="font-size:0.7em; color:#1D4363">INTERNATIONAL COLLEGE</span></div>
         </div>
-        <div class="flags" onclick="toggleLang()" title="Switch Language">🇷🇴 🇬🇧</div>
+
+        <div class="lang-switcher-container" onclick="toggleLang()">
+            <div id="langRO" class="lang-option active">
+                <span class="flag-icon">🇷🇴</span> RO
+            </div>
+            <div id="langEN" class="lang-option">
+                <span class="flag-icon">🇬🇧</span> EN
+            </div>
+        </div>
+
     </div>
 
     <h1 class="page-title" id="pageTitle">Meniul Săptămânal</h1>
@@ -402,8 +437,6 @@
             document.getElementById('pageTitle').textContent = t.title;
             document.getElementById('loaderText').textContent = t.loading;
             
-            // UPDATE: Am scos linia care updata butonul btnLang, deoarece butonul nu mai exista
-            
             for(let i=0; i<4; i++) {
                 let btn = document.getElementById(`btnW${i}`);
                 if(btn) updateButtonText(btn);
@@ -431,6 +464,19 @@
 
         function toggleLang() {
             currentLang = currentLang === 'ro' ? 'en' : 'ro';
+            
+            // LOGICA VIZUALA PENTRU BUTONUL MARE
+            const roBtn = document.getElementById('langRO');
+            const enBtn = document.getElementById('langEN');
+
+            if(currentLang === 'ro') {
+                roBtn.classList.add('active');
+                enBtn.classList.remove('active');
+            } else {
+                enBtn.classList.add('active');
+                roBtn.classList.remove('active');
+            }
+
             updateStaticTexts();
             if(cachedData[currentWeekIndex]) {
                 renderData(cachedData[currentWeekIndex]);
