@@ -9,17 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <style>
-        /* --- DESIGN UPDATED TO MATCH IMAGE --- */
         :root {
-            /* Colors extracted from the image */
-            --q-blue: #254E70;       /* The deep blue from buttons/text */
-            --q-blue-light: #E6F2F8; /* The light blue card background */
-            --q-gold: #FFC107;       /* The yellow highlight */
-            --q-gold-hover: #e0a800;
+            --q-blue: #254E70;       
+            --q-blue-light: #E6F2F8; 
+            --q-gold: #FFC107;       
             --q-white: #FFFFFF;
-            --q-bg: #F9F9F9;         /* Off-white page background */
-            --q-text: #2D3748;       /* Dark gray text */
-            --q-border-color: #CBD5E0;
+            --q-bg: #F9F9F9;         
+            --q-text: #2D3748;       
         }
 
         body {
@@ -30,144 +26,112 @@
             min-height: 100vh;
         }
 
-        /* Top Header Area (Logo & Flags) */
+        /* HEADER */
         .site-header {
-            width: 100%; max-width: 1000px;
+            width: 100%; max-width: 1100px;
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px;
         }
         .logo-placeholder {
             display: flex; align-items: center; gap: 10px;
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700; color: #b8860b; /* Goldish color for text */
+            font-weight: 700; color: #b8860b;
             text-transform: uppercase; letter-spacing: 1px;
             font-size: 1.1rem;
         }
-        .logo-icon {
-            height: 40px; width: auto; /* Placeholder for shield */
-        }
-        .flags {
-            font-size: 1.5rem;
-        }
+        .flags { font-size: 1.5rem; }
 
-        /* Main Title */
         h1.page-title {
-            color: #333;
-            font-size: 2rem; font-weight: 700;
-            text-align: center;
-            margin: 0 0 30px 0;
+            color: #333; font-size: 2rem; font-weight: 700;
+            text-align: center; margin: 0 0 30px 0;
         }
 
-        /* Navigation Buttons */
+        /* NAVIGATIE SAPTAMANI */
         .week-nav {
-            display: flex; justify-content: center; gap: 15px;
+            display: flex; justify-content: center; gap: 10px;
             margin-bottom: 20px; flex-wrap: wrap;
         }
 
         .week-btn {
-            background-color: var(--q-blue); /* Dark Blue Background */
-            color: var(--q-gold);            /* Gold Text */
-            border: none;
-            padding: 10px 20px;
+            background-color: var(--q-blue); 
+            color: var(--q-gold);            
+            border: none; padding: 12px 15px;
             font-family: 'Roboto', sans-serif; font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer; transition: all 0.2s ease;
-            min-width: 140px; text-align: center;
-            border-radius: 6px;
+            font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease;
+            min-width: 130px; text-align: center; border-radius: 6px;
+            line-height: 1.2;
         }
-        .week-btn:hover { 
-            filter: brightness(1.1);
-            transform: translateY(-1px);
-        }
-        /* Active State = The "Current Week" Yellow Button style */
+        .week-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
         .week-btn.active {
-            background-color: var(--q-gold);
-            color: var(--q-blue);
-            font-weight: 800;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: var(--q-gold); color: var(--q-blue);
+            font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transform: scale(1.05);
         }
 
-        /* Language Toggle */
-        .lang-wrapper { 
-            display: flex; justify-content: center; margin-bottom: 20px; 
-        }
+        /* NAVIGATIE LIMBA */
+        .lang-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
         .lang-btn {
             background: transparent; border: 1px solid var(--q-blue);
-            color: var(--q-blue);
-            padding: 5px 15px; font-size: 0.8rem; font-weight: 700;
-            cursor: pointer; border-radius: 4px;
+            color: var(--q-blue); padding: 5px 15px; 
+            font-size: 0.8rem; font-weight: 700; cursor: pointer; border-radius: 4px;
         }
         .lang-btn:hover { background: var(--q-blue); color: var(--q-white); }
 
-        /* --- THE MENU CARD CONTAINER --- */
+        /* CONTAINER MENIU */
         .container {
-            width: 100%; max-width: 1000px;
-            background: var(--q-blue-light); /* Light blue background from image */
-            margin: 0 auto; padding: 25px;
-            /* The specific thick blue border on the left */
+            width: 100%; max-width: 1100px;
+            background: var(--q-blue-light); 
+            margin: 0 auto; padding: 20px;
             border-left: 6px solid var(--q-blue); 
-            border-radius: 0 10px 10px 0; /* Rounded on right side only */
+            border-radius: 0 10px 10px 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             position: relative;
         }
 
-        .table-wrap {
-            overflow-x: auto;
-            min-height: 200px;
-        }
-
-        /* Table Styling to look like Grid Cards */
+        .table-wrap { overflow-x: auto; min-height: 300px; }
+        
         table { 
             width: 100%; 
-            border-collapse: separate; /* Allows spacing between cells */
-            border-spacing: 10px;      /* Gap between "Cards" */
-            min-width: 600px; 
+            border-collapse: separate; 
+            border-spacing: 8px; /* Spatiu intre carduri */
+            min-width: 800px; 
         }
 
         th {
-            padding: 10px;
-            text-align: left;
-            font-size: 1.1rem; color: #333;
-            font-weight: 700;
-            /* Making the header look like "Monday, Jan 12" style */
+            padding: 10px; text-align: center; 
+            font-size: 1.1rem; color: #333; font-weight: 700;
+            text-transform: capitalize;
         }
 
+        /* CARDURILE DE MANCARE */
         td {
-            background-color: var(--q-white);
-            padding: 20px;
-            border-radius: 8px; /* Rounded card corners */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-            vertical-align: top;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #4A5568;
-            border: 1px solid transparent;
-            text-align: center;
+            background-color: var(--q-white); padding: 15px;
+            border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            vertical-align: top; font-size: 0.9rem; line-height: 1.4;
+            color: #4A5568; border: 1px solid transparent; text-align: center;
+            height: 100%;
         }
 
-        /* The First Column (Categories: Main Course, etc) */
+        /* Coloana Categorie (Prima) */
         td:first-child {
-            background-color: transparent;
-            box-shadow: none;
-            text-align: right;
-            font-weight: 700;
-            color: var(--q-blue);
-            width: 120px;
-            border: none;
-            vertical-align: middle;
-            font-size: 1rem;
+            background-color: transparent; box-shadow: none;
+            text-align: right; font-weight: 700; color: var(--q-blue);
+            width: 100px; border: none; vertical-align: middle; 
+            font-size: 0.95rem; padding-right: 15px;
         }
 
-        /* Highlight for Salad/Veg rows if needed, or keep white */
+        /* Stil pentru randuri alternative sau salate */
+        tr:nth-child(even) td:not(:first-child) {
+            background-color: #fdfdfd;
+        }
         tr.row-salad td:not(:first-child) { 
-            background-color: #FAFFF5; /* Very subtle green tint for salad */
-            border: 1px solid #E2EFDA;
+            background-color: #FAFFF5; border: 1px solid #E2EFDA;
         }
         
+        /* LOADER */
         .loader {
             display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.8); z-index: 10;
+            background: rgba(255,255,255,0.9); z-index: 10;
             justify-content: center; align-items: center; flex-direction: column; color: var(--q-blue);
             border-radius: 0 10px 10px 0;
         }
@@ -191,32 +155,28 @@
             </svg>
             <div>QUESTFIELD<br><span style="font-size:0.7em; color:#254E70">INTERNATIONAL COLLEGE</span></div>
         </div>
-        <div class="flags">
-            🇷🇴 🇬🇧
-        </div>
+        <div class="flags">🇷🇴 🇬🇧</div>
     </div>
 
-    <h1 class="page-title">Weekly Lunch Menu</h1>
+    <h1 class="page-title" id="pageTitle">Meniul Săptămânal</h1>
 
     <div class="week-nav">
-        <button onclick="changeWeek(0)" id="btnW0" class="week-btn">Săptămâna 1</button>
-        <button onclick="changeWeek(1)" id="btnW1" class="week-btn">Săptămâna 2</button>
-        <button onclick="changeWeek(2)" id="btnW2" class="week-btn">Săptămâna 3</button>
-        <button onclick="changeWeek(3)" id="btnW3" class="week-btn">Săptămâna 4</button>
+        <button onclick="changeWeek(0)" id="btnW0" class="week-btn">Week 1</button>
+        <button onclick="changeWeek(1)" id="btnW1" class="week-btn">Week 2</button>
+        <button onclick="changeWeek(2)" id="btnW2" class="week-btn">Week 3</button>
+        <button onclick="changeWeek(3)" id="btnW3" class="week-btn">Week 4</button>
     </div>
 
-    <div class="lang-wrapper"><button onclick="toggleLang()" id="btnLang" class="lang-btn">RO / EN</button></div>
+    <div class="lang-wrapper"><button onclick="toggleLang()" id="btnLang" class="lang-btn">Switch to English</button></div>
 
     <div class="container">
         <div class="table-wrap">
             <div id="loader" class="loader">
-                <div class="spinner"></div><span>Updating Menu...</span>
+                <div class="spinner"></div><span id="loaderText">Se încarcă...</span>
             </div>
             <table id="menuTable">
-                <thead id="tableHeader">
-                    </thead>
-                <tbody id="tableBody">
-                    </tbody>
+                <thead id="tableHeader"></thead>
+                <tbody id="tableBody"></tbody>
             </table>
         </div>
     </div>
@@ -225,20 +185,39 @@
 
     <script>
         // ===============================================================
-        // AICI PUI LINK-URILE TALE O SINGURĂ DATĂ. NU MAI SCHIMBI NIMIC.
+        // LINK-URILE GOOGLE SHEETS
         // ===============================================================
         const LINKS = [
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=0&single=true&output=csv",  // Link Saptamana 1
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=1317978849&single=true&output=csv", // Link Saptamana 2
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=11715441&single=true&output=csv", // Link Saptamana 3
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=184508981&single=true&output=csv"  // Link Saptamana 4
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=0&single=true&output=csv",
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=1317978849&single=true&output=csv",
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=11715441&single=true&output=csv",
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwcBswQbv2-pcOeX_i_kAu4UubV0UNx0oGofMVLFF-RUr4iiQxg-Mx0JrDkp4fal7uNxraceHSGbnM/pub?gid=184508981&single=true&output=csv"
         ];
         // ===============================================================
 
-        let currentLang = 'ro';
+        // TEXTE DE INTERFATA
+        const TEXTS = {
+            ro: {
+                title: "Meniul Săptămânal",
+                loading: "Se încarcă meniul...",
+                langBtn: "Switch to English",
+                week: "Săptămâna",
+                err: "Nu s-au găsit datele pentru această săptămână."
+            },
+            en: {
+                title: "Weekly Lunch Menu",
+                loading: "Loading menu...",
+                langBtn: "Schimbă în Română",
+                week: "Week",
+                err: "No data found for this week."
+            }
+        };
+
+        let currentLang = 'ro'; 
         let currentWeekIndex = 0;
         let cachedData = {};
 
+        // Functii Data Calendaristica
         function getMonday(d) {
             d = new Date(d);
             var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
@@ -250,16 +229,40 @@
             return `${dd}.${mm}`;
         }
 
-        // Setam datele pe butoane automat
-        function initButtons() {
-            let today = new Date();
-            let start = getMonday(today);
+        // Initializare Pagina
+        function initPage() {
+            updateStaticTexts();
+            // Generare date pe butoane
+            let start = getMonday(new Date());
             for(let i=0; i<4; i++) {
                 let s = new Date(start); s.setDate(start.getDate() + i*7);
                 let e = new Date(s); e.setDate(s.getDate() + 4);
                 let btn = document.getElementById(`btnW${i}`);
-                if(btn) btn.textContent = `${formatDate(s)} - ${formatDate(e)}`;
+                if(btn) {
+                    // Stocam datele in dataset ca sa le putem actualiza la schimbarea limbii
+                    btn.dataset.dateText = `${formatDate(s)} - ${formatDate(e)}`;
+                    btn.dataset.weekNum = i + 1;
+                    updateButtonText(btn);
+                }
             }
+        }
+
+        function updateStaticTexts() {
+            const t = TEXTS[currentLang];
+            document.getElementById('pageTitle').textContent = t.title;
+            document.getElementById('loaderText').textContent = t.loading;
+            document.getElementById('btnLang').textContent = t.langBtn;
+            
+            // Update buttons
+            for(let i=0; i<4; i++) {
+                let btn = document.getElementById(`btnW${i}`);
+                if(btn) updateButtonText(btn);
+            }
+        }
+
+        function updateButtonText(btn) {
+            const t = TEXTS[currentLang];
+            btn.innerHTML = `<div>${t.week} ${btn.dataset.weekNum}</div><div style="font-size:0.75em; opacity:0.8; font-weight:400">${btn.dataset.dateText}</div>`;
         }
 
         function changeWeek(index) {
@@ -267,115 +270,158 @@
             document.querySelectorAll('.week-btn').forEach((b,i) => {
                 if(i === index) b.classList.add('active'); else b.classList.remove('active');
             });
-            loadMenuData(LINKS[index]);
-        }
-
-        function loadMenuData(url) {
-            const tableBody = document.getElementById('tableBody');
-            const loader = document.getElementById('loader');
-            
-            // Verificam daca linkul este cel default (necompletat)
-            if(url.includes("ID-UL-TĂU")) {
-                loader.style.display = 'none';
-                tableBody.innerHTML = `<tr><td colspan="6" style="padding:30px;text-align:center">Link-ul pentru această săptămână nu a fost configurat în cod.</td></tr>`;
-                return;
-            }
-
-            if(cachedData[url]) {
-                renderTable(cachedData[url]);
-                return;
-            }
-
-            loader.style.display = 'flex';
-            // Adaugam timestamp pentru a forta actualizarea (sa nu ia din cache)
-            const bustCacheUrl = url + "&t=" + new Date().getTime();
-
-            Papa.parse(bustCacheUrl, {
-                download: true,
-                complete: function(results) {
-                    loader.style.display = 'none';
-                    const parsed = parseSheetData(results.data);
-                    if(parsed) {
-                        cachedData[url] = parsed;
-                        renderTable(parsed);
-                    } else {
-                        tableBody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:red; text-align:center">Eroare structură Excel. Verifică dacă există 'Luni' sau 'Monday'.</td></tr>`;
-                    }
-                },
-                error: function() {
-                    loader.style.display = 'none';
-                    tableBody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:red; text-align:center">Eroare conexiune Google.</td></tr>`;
-                }
-            });
-        }
-
-        function parseSheetData(rows) {
-            let roIdx = -1, enIdx = -1;
-            for(let i=0; i<rows.length; i++) {
-                let str = JSON.stringify(rows[i]).toLowerCase();
-                if(str.includes("luni")) roIdx = i;
-                if(str.includes("monday")) enIdx = i;
-            }
-            if(roIdx === -1 || enIdx === -1) return null;
-            return { ro: extractBlock(rows, roIdx), en: extractBlock(rows, enIdx) };
-        }
-
-        function extractBlock(rows, startRowIndex) {
-            let header = rows[startRowIndex];
-            let startCol = 0;
-            for(let k=0; k<header.length; k++) {
-                if(header[k] && (header[k].toLowerCase().includes('luni') || header[k].toLowerCase().includes('monday'))) {
-                    startCol = k; break;
-                }
-            }
-            let days = header.slice(startCol, startCol+5);
-            let dataRows = [];
-            let i = startRowIndex + 1;
-            let count = 0;
-            while(i < rows.length && count < 6) {
-                let r = rows[i];
-                let typeCol = startCol > 0 ? startCol - 1 : 0;
-                if(r && r[typeCol]) {
-                    dataRows.push({ type: r[typeCol], items: r.slice(startCol, startCol+5) });
-                    count++;
-                }
-                i++;
-            }
-            return { days: days, rows: dataRows };
-        }
-
-        function renderTable(data) {
-            const currentData = currentLang === 'ro' ? data.ro : data.en;
-            const thead = document.getElementById('tableHeader');
-            const tbody = document.getElementById('tableBody');
-
-            thead.innerHTML = `<th></th>`; // Empty cell for category column
-            currentData.days.forEach(d => {
-                let th = document.createElement('th'); th.textContent = d; thead.appendChild(th);
-            });
-
-            tbody.innerHTML = '';
-            currentData.rows.forEach(r => {
-                let tr = document.createElement('tr');
-                if(r.type.toLowerCase().includes('salat') || r.type.toLowerCase().includes('salad')) tr.classList.add('row-salad');
-                let tdName = document.createElement('td'); tdName.innerHTML = r.type; tr.appendChild(tdName);
-                r.items.forEach(it => {
-                    let cell = document.createElement('td'); cell.textContent = it || '-'; tr.appendChild(cell);
-                });
-                tbody.appendChild(tr);
-            });
+            loadData(LINKS[index]);
         }
 
         function toggleLang() {
             currentLang = currentLang === 'ro' ? 'en' : 'ro';
-            document.getElementById('btnLang').textContent = currentLang === 'ro' ? 'RO / EN' : 'EN / RO';
-            loadMenuData(LINKS[currentWeekIndex]);
+            updateStaticTexts();
+            if(cachedData[currentWeekIndex]) {
+                renderTable(cachedData[currentWeekIndex]);
+            } else {
+                changeWeek(currentWeekIndex);
+            }
         }
 
-        window.onload = function() {
-            initButtons();
-            changeWeek(0);
-        };
+        // --- LOGICA DE PARSARE COMPLEXA ---
+        function loadData(url) {
+            if(url.includes("ID-UL-TĂU")) return;
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+
+            const bust = url + "&t=" + new Date().getTime();
+
+            Papa.parse(bust, {
+                download: true,
+                complete: function(results) {
+                    const parsed = processExcelData(results.data);
+                    cachedData[currentWeekIndex] = parsed;
+                    renderTable(parsed);
+                    loader.style.display = 'none';
+                },
+                error: function() {
+                    document.getElementById('tableBody').innerHTML = `<tr><td colspan="6">Eroare încărcare date.</td></tr>`;
+                    loader.style.display = 'none';
+                }
+            });
+        }
+
+        function processExcelData(rows) {
+            // 1. Gasim coordonatele blocurilor RO si EN
+            let roCoords = findBlockCoordinates(rows, "luni");
+            let enCoords = findBlockCoordinates(rows, "monday");
+
+            // Daca nu gasim unul dintre ele, incercam fallback
+            if(!roCoords && !enCoords) return null;
+
+            return {
+                ro: extractDataFromCoords(rows, roCoords, roCoords), // Foloseste categoriile RO pt RO
+                en: extractDataFromCoords(rows, enCoords, roCoords)  // Foloseste categoriile RO pt EN (daca EN nu are)
+            };
+        }
+
+        function findBlockCoordinates(rows, keyword) {
+            for(let i=0; i<rows.length; i++) {
+                let rowStr = JSON.stringify(rows[i]).toLowerCase();
+                if(rowStr.includes(keyword)) {
+                    // Am gasit randul, acum gasim coloana
+                    for(let k=0; k<rows[i].length; k++) {
+                        if(rows[i][k] && rows[i][k].toLowerCase().includes(keyword)) {
+                            return { row: i, col: k };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        function extractDataFromCoords(rows, dataCoords, categoryCoords) {
+            if(!dataCoords) return null;
+            
+            // Header-ul (Zilele)
+            let headerRow = rows[dataCoords.row];
+            let days = headerRow.slice(dataCoords.col, dataCoords.col + 5);
+
+            // Randurile de mancare
+            let items = [];
+            let r = dataCoords.row + 1;
+            let safety = 0;
+
+            while(r < rows.length && safety < 10) {
+                let rowData = rows[r];
+                
+                // Verificam daca randul are continut in zona datelor
+                let hasFood = false;
+                for(let c=0; c<5; c++) {
+                    if(rowData[dataCoords.col + c] && rowData[dataCoords.col + c].trim().length > 1) hasFood = true;
+                }
+
+                if(hasFood) {
+                    // Extragem Categoria (ne uitam la coordonatele categoriei - 1 coloana)
+                    let catName = "";
+                    if(categoryCoords) {
+                        let catCol = categoryCoords.col - 1;
+                        if(catCol >= 0 && rows[r][catCol]) {
+                            catName = rows[r][catCol];
+                        }
+                    }
+                    
+                    items.push({
+                        category: catName,
+                        food: rowData.slice(dataCoords.col, dataCoords.col + 5)
+                    });
+                }
+                r++;
+                safety++;
+            }
+            return { days: days, items: items };
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            const thead = document.getElementById('tableHeader');
+            tbody.innerHTML = ''; thead.innerHTML = '';
+
+            if(!data) return;
+            const activeData = currentLang === 'ro' ? (data.ro || data.en) : (data.en || data.ro);
+
+            if(!activeData) {
+                tbody.innerHTML = `<tr><td colspan="6">${TEXTS[currentLang].err}</td></tr>`;
+                return;
+            }
+
+            // Render Header
+            let thRow = `<th></th>`; // Spatiu pt categorie
+            activeData.days.forEach(d => thRow += `<th>${d}</th>`);
+            thead.innerHTML = thRow;
+
+            // Render Rows
+            activeData.items.forEach(row => {
+                let tr = document.createElement('tr');
+                
+                // Logica vizuala pentru salate/gustari (optional)
+                let catLower = row.category.toLowerCase();
+                if(catLower.includes('salad') || catLower.includes('salat') || catLower.includes('snack') || catLower.includes('gustar')) {
+                    tr.classList.add('row-salad');
+                }
+
+                // Celula Categorie
+                let tdCat = document.createElement('td');
+                tdCat.innerHTML = row.category; 
+                tr.appendChild(tdCat);
+
+                // Celule Mancare
+                row.food.forEach(f => {
+                    let td = document.createElement('td');
+                    td.innerText = f || '-';
+                    tr.appendChild(td);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.onload = initPage;
     </script>
 </body>
 </html>
