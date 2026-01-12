@@ -44,7 +44,21 @@
             text-transform: uppercase; letter-spacing: 1px;
             font-size: 1.1rem;
         }
-        .flags { font-size: 1.6rem; cursor: pointer; }
+        
+        /* UPDATE: Cursor pointer si efect hover pe steaguri */
+        .flags { 
+            font-size: 1.6rem; 
+            cursor: pointer; 
+            user-select: none;
+            transition: transform 0.2s ease;
+            padding: 5px;
+        }
+        .flags:hover {
+            transform: scale(1.1);
+        }
+        .flags:active {
+            transform: scale(0.95);
+        }
 
         h1.page-title {
             color: var(--q-text-dark); 
@@ -56,7 +70,7 @@
         /* NAVIGATIE BUTOANE */
         .week-nav {
             display: flex; justify-content: center; gap: 15px;
-            margin-bottom: 50px; 
+            margin-bottom: 30px; 
             flex-wrap: wrap;
             width: 100%; max-width: 900px;
         }
@@ -109,14 +123,6 @@
             border-width: 0 4px 4px 4px; border-style: solid;
             border-color: transparent transparent #E53E3E transparent;
         }
-
-        .lang-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
-        .lang-btn {
-            background: transparent; border: 1px solid var(--q-blue);
-            color: var(--q-blue); padding: 8px 20px; 
-            font-size: 0.9rem; font-weight: 700; cursor: pointer; border-radius: 4px;
-        }
-        .lang-btn:hover { background: var(--q-blue); color: var(--q-white); }
 
         /* --- CONTAINER GENERAL --- */
         .container {
@@ -277,7 +283,7 @@
             </svg>
             <div style="line-height:1.2">QUESTFIELD<br><span style="font-size:0.7em; color:#1D4363">INTERNATIONAL COLLEGE</span></div>
         </div>
-        <div class="flags">🇷🇴 🇬🇧</div>
+        <div class="flags" onclick="toggleLang()" title="Switch Language">🇷🇴 🇬🇧</div>
     </div>
 
     <h1 class="page-title" id="pageTitle">Meniul Săptămânal</h1>
@@ -288,8 +294,6 @@
         <button onclick="changeWeek(2)" id="btnW2" class="week-btn">Week 3</button>
         <button onclick="changeWeek(3)" id="btnW3" class="week-btn">Week 4</button>
     </div>
-
-    <div class="lang-wrapper"><button onclick="toggleLang()" id="btnLang" class="lang-btn">Switch to English</button></div>
 
     <div class="container">
         
@@ -330,7 +334,6 @@
             ro: {
                 title: "Meniul Săptămânal",
                 loading: "Pregătim meniul...", 
-                langBtn: "Switch to English",
                 week: "Săptămâna",
                 currWeek: "SĂPTĂMÂNA CURENTĂ", 
                 err: "Nu s-au găsit datele pentru această săptămână.",
@@ -339,7 +342,6 @@
             en: {
                 title: "Weekly Lunch Menu",
                 loading: "Preparing the menu...",
-                langBtn: "Schimbă în Română",
                 week: "Week",
                 currWeek: "CURRENT WEEK",
                 err: "No data found for this week.",
@@ -399,7 +401,8 @@
             const t = TEXTS[currentLang];
             document.getElementById('pageTitle').textContent = t.title;
             document.getElementById('loaderText').textContent = t.loading;
-            document.getElementById('btnLang').textContent = t.langBtn;
+            
+            // UPDATE: Am scos linia care updata butonul btnLang, deoarece butonul nu mai exista
             
             for(let i=0; i<4; i++) {
                 let btn = document.getElementById(`btnW${i}`);
