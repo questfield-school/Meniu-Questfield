@@ -9,18 +9,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <style>
+        /* --- PALETA DE CULORI (Inspirată din imagine) --- */
         :root {
-            --q-blue: #254E70;       
-            --q-blue-light: #E6F2F8; 
-            --q-gold: #FFC107;       
+            --q-blue: #1D4363;       /* Albastru Marin închis (Butoane) */
+            --q-gold: #FFD700;       /* Galben/Auriu intens (Text butoane) */
+            --q-cream-bg: #FEFCF5;   /* Fundal pagină (Crem) */
+            --q-highlight: #FFF8E1;  /* Fundal pentru ZIUA CURENTĂ (Galben foarte pal) */
+            --q-border-gold: #F0E68C;/* Chenar pentru ziua curentă */
             --q-white: #FFFFFF;
-            --q-bg: #F9F9F9;         
-            --q-text: #2D3748;       
+            --q-text: #333333;       /* Gri închis elegant */
+            --q-gray-light: #718096;
         }
 
         body {
             font-family: 'Roboto', 'Montserrat', sans-serif;
-            background-color: var(--q-bg);
+            background-color: var(--q-cream-bg);
             margin: 0; padding: 20px; color: var(--q-text);
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh;
@@ -30,49 +33,65 @@
         .site-header {
             width: 100%; max-width: 1100px;
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .logo-placeholder {
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 12px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700; color: #b8860b;
             text-transform: uppercase; letter-spacing: 1px;
             font-size: 1.1rem;
         }
-        .flags { font-size: 1.5rem; }
+        .flags { font-size: 1.6rem; cursor: default; }
 
         h1.page-title {
-            color: #333; font-size: 2rem; font-weight: 700;
+            color: var(--q-text); 
+            font-size: 2.2rem; font-weight: 700;
             text-align: center; margin: 0 0 30px 0;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        /* NAVIGATIE SAPTAMANI */
+        /* NAVIGATIE BUTOANE */
         .week-nav {
-            display: flex; justify-content: center; gap: 10px;
-            margin-bottom: 20px; flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 15px;
+            margin-bottom: 25px; flex-wrap: wrap;
         }
 
         .week-btn {
             background-color: var(--q-blue); 
             color: var(--q-gold);            
-            border: none; padding: 12px 15px;
-            font-family: 'Roboto', sans-serif; font-weight: 600;
+            border: none; padding: 10px 15px;
+            font-family: 'Montserrat', sans-serif; 
             font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease;
-            min-width: 130px; text-align: center; border-radius: 6px;
-            line-height: 1.2;
+            min-width: 160px; text-align: center; border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .week-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
-        .week-btn.active {
-            background-color: var(--q-gold); color: var(--q-blue);
-            font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transform: scale(1.05);
+        
+        .week-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            filter: brightness(1.1);
         }
 
-        /* NAVIGATIE LIMBA */
+        /* Stil pentru butonul selectat activ */
+        .week-btn.active {
+            border: 2px solid var(--q-gold);
+            background-color: #163a57; /* Un pic mai inchis */
+        }
+
+        /* Textul "Saptamana Curenta" de pe buton */
+        .current-badge {
+            color: #FFFFFF; font-size: 0.75em; text-transform: uppercase; 
+            margin-top: 4px; font-weight: 700; letter-spacing: 0.5px;
+            background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;
+        }
+
+        /* SCHIMBARE LIMBA */
         .lang-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
         .lang-btn {
             background: transparent; border: 1px solid var(--q-blue);
-            color: var(--q-blue); padding: 5px 15px; 
+            color: var(--q-blue); padding: 6px 18px; 
             font-size: 0.8rem; font-weight: 700; cursor: pointer; border-radius: 4px;
         }
         .lang-btn:hover { background: var(--q-blue); color: var(--q-white); }
@@ -80,54 +99,67 @@
         /* CONTAINER MENIU */
         .container {
             width: 100%; max-width: 1100px;
-            background: var(--q-blue-light); 
-            margin: 0 auto; padding: 20px;
-            border-left: 6px solid var(--q-blue); 
-            border-radius: 0 10px 10px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            background: var(--q-cream-bg); /* Match body bg for seamless look or make slightly darker */
+            margin: 0 auto; 
             position: relative;
         }
 
-        .table-wrap { overflow-x: auto; min-height: 300px; }
+        .table-wrap { overflow-x: auto; min-height: 300px; padding-bottom: 20px; }
         
         table { 
             width: 100%; 
             border-collapse: separate; 
-            border-spacing: 8px; 
+            border-spacing: 12px; /* Spatiu intre carduri */
             min-width: 800px; 
         }
 
         th {
-            padding: 10px; text-align: center; 
+            padding: 15px; text-align: center; 
             font-size: 1.1rem; color: #333; font-weight: 700;
             text-transform: capitalize;
         }
 
+        /* CARDURILE DE MANCARE */
         td {
-            background-color: var(--q-white); padding: 15px;
-            border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-            vertical-align: top; font-size: 0.9rem; line-height: 1.4;
-            color: #4A5568; border: 1px solid transparent; text-align: center;
+            background-color: var(--q-white); padding: 20px;
+            border-radius: 8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Umbra fina */
+            vertical-align: top; font-size: 0.95rem; line-height: 1.5;
+            color: #4A5568; border: 1px solid #EEE; text-align: center;
             height: 100%;
         }
 
+        /* Coloana Categorie (Prima) */
         td:first-child {
-            background-color: transparent; box-shadow: none;
+            background-color: transparent; box-shadow: none; border: none;
             text-align: right; font-weight: 700; color: var(--q-blue);
-            width: 100px; border: none; vertical-align: middle; 
-            font-size: 0.95rem; padding-right: 15px;
+            width: 120px; vertical-align: middle; 
+            font-size: 1rem; padding-right: 20px;
         }
 
-        tr:nth-child(even) td:not(:first-child) { background-color: #fdfdfd; }
+        /* --- HIGHLIGHT PENTRU ZIUA CURENTA --- */
+        /* Clasa aplicata automat de JS pe TH si TD */
+        .is-today {
+            background-color: var(--q-highlight) !important; /* Galben pal */
+            border: 2px solid var(--q-border-gold) !important;
+            position: relative;
+        }
+        /* Adaugam o eticheta mica 'Azi' pe header */
+        th.is-today::after {
+            content: '●'; color: var(--q-gold); 
+            font-size: 0.8em; margin-left: 8px; vertical-align: middle;
+        }
+
+        /* Stil pentru salate (Subtil) */
         tr.row-salad td:not(:first-child) { 
-            background-color: #FAFFF5; border: 1px solid #E2EFDA;
+            border-bottom: 3px solid #E2EFDA;
         }
         
+        /* LOADER */
         .loader {
             display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.9); z-index: 10;
+            background: rgba(254, 252, 245, 0.9); z-index: 10;
             justify-content: center; align-items: center; flex-direction: column; color: var(--q-blue);
-            border-radius: 0 10px 10px 0;
         }
         .spinner {
             border: 4px solid #f3f3f3; border-top: 4px solid var(--q-gold);
@@ -145,9 +177,9 @@
         <div class="logo-placeholder">
             <svg width="40" height="45" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L4 5V11C4 16.55 7.4 21.74 12 23C16.6 21.74 20 16.55 20 11V5L12 2Z" fill="#b8860b"/>
-                <path d="M12 4L18 6.5V11C18 15.5 15.5 19.5 12 20.5V4Z" fill="#254E70"/>
+                <path d="M12 4L18 6.5V11C18 15.5 15.5 19.5 12 20.5V4Z" fill="#1D4363"/>
             </svg>
-            <div>QUESTFIELD<br><span style="font-size:0.7em; color:#254E70">INTERNATIONAL COLLEGE</span></div>
+            <div>QUESTFIELD<br><span style="font-size:0.7em; color:#1D4363">INTERNATIONAL COLLEGE</span></div>
         </div>
         <div class="flags">🇷🇴 🇬🇧</div>
     </div>
@@ -197,6 +229,7 @@
                 loading: "Se încarcă meniul...",
                 langBtn: "Switch to English",
                 week: "Săptămâna",
+                currWeek: "Săptămâna Curentă", // Textul pentru highlight saptamana
                 err: "Nu s-au găsit datele pentru această săptămână."
             },
             en: {
@@ -204,6 +237,7 @@
                 loading: "Loading menu...",
                 langBtn: "Schimbă în Română",
                 week: "Week",
+                currWeek: "Current Week",
                 err: "No data found for this week."
             }
         };
@@ -223,34 +257,37 @@
             
             // Calculam datele butoanelor pornind de la data fixa
             let startDate = new Date(MENU_START_DATE);
-            let today = new Date();
+            let today = new Date(); // Data de azi
+            // Resetam ora pentru comparatie corecta
+            today.setHours(0,0,0,0);
+            
             let activeIndex = 0; // Default Week 1
 
             for(let i=0; i<4; i++) {
                 let s = new Date(startDate); 
-                s.setDate(startDate.getDate() + (i * 7)); // Start saptamana curenta din loop
+                s.setDate(startDate.getDate() + (i * 7)); // Start saptamana
                 
                 let e = new Date(s); 
                 e.setDate(s.getDate() + 4); // Vineri
+
+                let weekEndSunday = new Date(s);
+                weekEndSunday.setDate(s.getDate() + 6); // Duminica
+
+                // Verificam daca AZI este in aceasta saptamana (pt Current Week label)
+                let isCurrent = (today >= s && today <= weekEndSunday);
+                if(isCurrent) activeIndex = i;
 
                 // Configuram butonul
                 let btn = document.getElementById(`btnW${i}`);
                 if(btn) {
                     btn.dataset.dateText = `${formatDate(s)} - ${formatDate(e)}`;
                     btn.dataset.weekNum = i + 1;
+                    btn.dataset.isCurrent = isCurrent; // Marcam butonul ca fiind curent
                     updateButtonText(btn);
-                }
-
-                // Verificam daca AZI este in aceasta saptamana (inclusiv weekend)
-                let weekEndSunday = new Date(s);
-                weekEndSunday.setDate(s.getDate() + 6);
-                
-                if (today >= s && today <= weekEndSunday) {
-                    activeIndex = i;
                 }
             }
             
-            // Setam saptamana activa
+            // Setam saptamana activa initial
             changeWeek(activeIndex);
         }
 
@@ -268,7 +305,16 @@
 
         function updateButtonText(btn) {
             const t = TEXTS[currentLang];
-            btn.innerHTML = `<div>${t.week} ${btn.dataset.weekNum}</div><div style="font-size:0.75em; opacity:0.8; font-weight:400">${btn.dataset.dateText}</div>`;
+            // Construim HTML-ul butonului
+            let html = `<div style="font-weight:700; font-size:1.1em; color:var(--q-gold)">${t.week} ${btn.dataset.weekNum}</div>`;
+            html += `<div style="font-size:0.8em; opacity:0.9; color:white; font-weight:400; margin-top:2px">${btn.dataset.dateText}</div>`;
+            
+            // Daca este saptamana curenta, adaugam badge-ul
+            if(btn.dataset.isCurrent === "true") {
+                html += `<div class="current-badge">${t.currWeek}</div>`;
+            }
+
+            btn.innerHTML = html;
         }
 
         function changeWeek(index) {
@@ -386,10 +432,24 @@
                 return;
             }
 
-            let thRow = `<th></th>`; 
-            activeData.days.forEach(d => thRow += `<th>${d}</th>`);
+            // Calculam indexul zilei curente (0=Luni, 1=Marti... 4=Vineri)
+            // getDay(): 0=Dum, 1=Luni...
+            let today = new Date();
+            let dayIndex = today.getDay() - 1; // Ajustam ca Luni sa fie 0
+            
+            // Daca e weekend, nu highlight-uim nimic (setam la -1)
+            if(today.getDay() === 0 || today.getDay() === 6) dayIndex = -1;
+
+            // Header
+            let thRow = `<th></th>`; // Spatiu pt categorie
+            activeData.days.forEach((d, idx) => {
+                // Adaugam clasa 'is-today' daca indexul corespunde
+                let cls = (idx === dayIndex) ? 'class="is-today"' : '';
+                thRow += `<th ${cls}>${d}</th>`;
+            });
             thead.innerHTML = thRow;
 
+            // Rows
             activeData.items.forEach(row => {
                 let tr = document.createElement('tr');
                 let catLower = row.category.toLowerCase();
@@ -401,9 +461,11 @@
                 tdCat.innerHTML = row.category; 
                 tr.appendChild(tdCat);
 
-                row.food.forEach(f => {
+                row.food.forEach((f, idx) => {
                     let td = document.createElement('td');
                     td.innerText = f || '-';
+                    // Adaugam highlight si pe celula de mancare
+                    if(idx === dayIndex) td.classList.add('is-today');
                     tr.appendChild(td);
                 });
 
